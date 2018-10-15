@@ -71,6 +71,10 @@ public class Controller {
     	textAreaConsole.setText(output);
     	
     	labelCount.setText("Hi from Areka");
+
+    	//add the following line
+    	labelCount.setText("Hi");
+
     }
     
     /**
