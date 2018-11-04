@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import java.util.List;
 
@@ -79,6 +81,28 @@ public class Controller {
     @FXML
     private void actionNew() {
     	System.out.println("actionNew");
+    }
+    
+    /**
+     * Called when the 'About Your Team' menu item is pressed. Pop a dialog to show team information.
+     */
+    @FXML
+    private void showTeamInfo() {
+    	String[] name = {"Lam Ping Yeung", "Fung King Fai", "Chang Chu Ling"};
+    	String[] itsc = {"pylamag", "kffungaa", "clchang"};
+    	String[] github = {"LunEyx", "ArekaFung", "Patsixd"};
+    	String content = "";
+    	for (int i = 0; i < 3; i++) {
+    		content += "Member " + (i+1) + ":\n";
+    		content += "\tName: " + name[i] + "\n";
+    		content += "\tITSC: " + itsc[i] + "\n";
+    		content += "\tGithub: " + github[i] + "\n\n";
+    	}
+    	final Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("About Your Team");
+    	alert.setHeaderText("");
+    	alert.setContentText(content);
+    	alert.showAndWait();
     }
 }
 
