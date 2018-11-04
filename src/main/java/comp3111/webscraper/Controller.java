@@ -4,6 +4,7 @@
 package comp3111.webscraper;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -103,6 +104,14 @@ public class Controller {
     	alert.setHeaderText("");
     	alert.setContentText(content);
     	alert.showAndWait();
+    }
+    
+    /**
+     * Called when the 'Quit' menu item is pressed. Quit the application and close all connection.
+     */
+    @FXML
+    private void quit() {
+    	Platform.exit();
     }
 }
 
