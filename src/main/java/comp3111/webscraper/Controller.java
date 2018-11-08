@@ -41,12 +41,25 @@ public class Controller {
     private TextArea textAreaConsole;
     
     private WebScraper scraper;
+    private List<Item> items;
+    
+    private ConsoleTab consoleTab;
+    private SummaryTab summaryTab;
+    private TableTab tableTab;
+    private DistributionTab distributionTab;
+    private TrendTab trendTab;
     
     /**
      * Default controller
      */
     public Controller() {
     	scraper = new WebScraper();
+    	
+    	consoleTab = new ConsoleTab();
+    	summaryTab = new SummaryTab();
+    	tableTab = new TableTab();
+    	distributionTab = new DistributionTab();
+    	trendTab = new TrendTab();
     }
 
     /**
@@ -69,8 +82,6 @@ public class Controller {
     		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
     	}
     	textAreaConsole.setText(output);
-    	
-    	
     }
     
     /**
