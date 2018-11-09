@@ -54,12 +54,6 @@ public class Controller {
      */
     public Controller() {
     	scraper = new WebScraper();
-    	
-    	consoleTab = new ConsoleTab();
-    	summaryTab = new SummaryTab();
-    	tableTab = new TableTab();
-    	distributionTab = new DistributionTab();
-    	trendTab = new TrendTab();
     }
 
     /**
@@ -67,7 +61,11 @@ public class Controller {
      */
     @FXML
     private void initialize() {
-    	
+    	consoleTab = new ConsoleTab();
+    	summaryTab = new SummaryTab();
+    	tableTab = new TableTab();
+    	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
+    	trendTab = new TrendTab();
     }
     
     /**
