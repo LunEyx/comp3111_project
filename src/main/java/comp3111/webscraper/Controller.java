@@ -16,12 +16,24 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Hyperlink;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import javafx.stage.FileChooser;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
-import javafx.stage.FileChooser;
+
 
 
 /**
@@ -208,18 +220,84 @@ public class Controller {
     private void saveToFile() {
     	System.out.println("Save");
     	FileChooser fc = new FileChooser();
+    	File outputFile;
     	fc.setTitle("Save current search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
-    	fc.showSaveDialog(null);
+    	outputFile = fc.showSaveDialog(null);
+    	if(outputFile != null) {
+    		try {
+    		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+    		          new FileOutputStream(outputFile)));
+    		          
+    		    for(Item temp : currentSearchResult) {
+    		    	writer.write(temp.getTitle());
+    		    	writer.newLine();
+    		    	writer.write(Double.toString(temp.getPrice()));
+    		    	writer.newLine();
+    		    	writer.write(temp.getUrl());
+    		    	writer.newLine();
+    		    	writer.write(temp.getPostedDate());
+    		    	writer.newLine();
+    		    	writer.newLine();
+    		    }
+    		    
+    		    writer.close();
+    		} catch (IOException ex) {}
+    	}
     }
     
     @FXML
     private void loadFromFile() {
     	System.out.println("Load");
     	FileChooser fc = new FileChooser();
+    	File inputFile;
     	fc.setTitle("Load a search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
-    	fc.showOpenDialog(null);
+    	inputFile = fc.showOpenDialog(null);
+    	
+    	if(inputFile != null) {
+    		String tempTitle;
+		    String tempPrice;
+		    String tempUrl;
+		    String tempPostedDate;
+		    Boolean readableFile = true;
+		    Item tempItem;
+		    Vector<Item> tempList = new Vector<Item>();
+//		    
+    		try {
+    		    BufferedReader reader = new BufferedReader(new InputStreamReader(
+    		          new FileInputStream(inputFile)));
+    		    
+    		    while((tempTitle = reader.readLine()) != null) {
+    		    	tempPrice = reader.readLine();
+    		    	tempUrl = reader.readLine();
+    		    	tempPostedDate = reader.readLine();
+    		    	reader.readLine();
+    		    	
+    		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) 
+    		    		readableFile = false;
+    		    	else {
+    		    		tempItem = new Item();
+    		    		tempItem.setTitle(tempTitle);
+    		    		tempItem.setPrice(Double.parseDouble(tempPrice));
+    		    		tempItem.setUrl(tempUrl);
+    		    		tempItem.setPostedDate(tempPostedDate);
+    		    		tempList.add(tempItem);
+    		    	}
+    		    }
+    		}catch (IOException ex) {
+    			readableFile = false;
+    		}catch (NumberFormatException e) {
+    			readableFile = false;
+    		}
+    		
+			if(readableFile) {
+				System.out.println("Reading SUccessful");
+				currentSearchResult = tempList;
+				tableTab.refreshResult(currentSearchResult);
+			}else
+		    	System.out.println("Un-readable File Format");
+    	}
     }
 }
 
