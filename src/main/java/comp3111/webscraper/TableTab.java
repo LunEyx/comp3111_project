@@ -29,7 +29,7 @@ public class TableTab {
 		this.tableColTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 		this.tableColPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 		this.tableColUrl.setCellValueFactory(new PropertyValueFactory<>("hyperlink"));
-		this.tableColPostedDate.setCellValueFactory(new PropertyValueFactory<>("posted_date"));
+		this.tableColPostedDate.setCellValueFactory(new PropertyValueFactory<>("postedDate"));
 		
 		this.tableColTitle.setSortable(true);
 		this.tableColPrice.setSortable(true);
