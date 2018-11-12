@@ -16,7 +16,6 @@ import java.util.List;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
-import javafx.stage.FileChooser;
 
 
 /**
@@ -119,21 +118,6 @@ public class Controller {
     	System.out.println("actionNew");
     }
     
-    @FXML
-    private void saveToFile() {
-    	System.out.println("Save");
-    	FileChooser fc = new FileChooser();
-    	fc.setTitle("Save search record");
-    	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
-    	fc.showSaveDialog(null);
-    }
-    @FXML
-    private void loadFromFile() {
-    	System.out.println("Load");
-    	FileChooser fc = new FileChooser();
-    	fc.setTitle("Load a search record");
-    	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
-    	fc.showOpenDialog(null);
-    }
+   
 }
 

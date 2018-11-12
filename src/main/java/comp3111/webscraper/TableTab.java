@@ -26,6 +26,7 @@ public class TableTab {
 		this.tableColUrl = inTableColUrl;
 		this.tableColPostedDate = inTableColPostedDate;
 		
+		
 		this.tableColTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 		this.tableColPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 		this.tableColUrl.setCellValueFactory(new PropertyValueFactory<>("hyperlink"));
