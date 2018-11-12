@@ -39,6 +39,10 @@ public class TableTab {
 		refreshTable();
 	}
 	
+	public void initialize() {
+		this.tableMain.getItems().clear();
+	}
+
 	public void refreshResult(List<Item> inResult) {
 		this.result = FXCollections.observableArrayList(inResult);
 		refreshTable();

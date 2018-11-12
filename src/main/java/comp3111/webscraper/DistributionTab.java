@@ -20,6 +20,10 @@ public class DistributionTab {
 		defaultHistogram();
 	}
 	
+	public void initialize() {
+		defaultHistogram();
+	}
+	
 	public void refresh(String keyword, List<Item> items) {
 		if (items.isEmpty()) {
 			defaultHistogram();
