@@ -12,7 +12,7 @@ public class Item {
 	private String title ; 
 	private double price ;
 	private String url ;
-	private Date posted_date;
+	private Date postedDate;
 	private Hyperlink hyperlink;
 	
 	public String getTitle() {
@@ -46,16 +46,16 @@ public class Item {
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
-	public void setDate(Date in_date) {
-		this.posted_date = in_date;
+	public void setDate(Date inDate) {
+		this.postedDate = inDate;
 	}
 	public String getPosted_date() {
 		String temp;
-		temp = this.posted_date.toString().substring(4, 7); //get the month
+		temp = this.postedDate.toString().substring(4, 7); //get the month
 		temp += ' ';
-		temp += this.posted_date.toString().substring(8, 10); //get the date
+		temp += this.postedDate.toString().substring(8, 10); //get the date
 		temp += ", ";
-		temp += this.posted_date.toString().substring(24, 28); //get the year		
+		temp += this.postedDate.toString().substring(24, 28); //get the year		
 		return temp;
 	}
 }
