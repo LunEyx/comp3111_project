@@ -9,9 +9,9 @@ import javafx.scene.control.Hyperlink;
 
 
 public class Item {
-	private String title ; 
-	private double price ;
-	private String url ;
+	private String title; 
+	private double price;
+	private String url;
 	private Date postedDate;
 	private Hyperlink hyperlink;
 	
