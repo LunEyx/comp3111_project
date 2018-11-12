@@ -7,6 +7,7 @@ package comp3111.webscraper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
@@ -47,6 +48,9 @@ public class Controller {
     @FXML
 	private BarChart<String, Number> barChartHistogram;
     
+    @FXML
+    private MenuItem lastSearchMenuItem;
+    
     private WebScraper scraper;
     private List<Item> items;
     
@@ -56,11 +60,17 @@ public class Controller {
     private DistributionTab distributionTab;
     private TrendTab trendTab;
     
+    private String currentSearchKeyword;
+    private List<Item> currentSearchResult;
+    private String lastSearchKeyword;
+    private List<Item> lastSearchResult;
+    
     /**
      * Default controller
      */
     public Controller() {
     	scraper = new WebScraper();
+    	currentSearchResult = null;
     }
 
     /**
@@ -90,6 +100,18 @@ public class Controller {
     	
     	// This line is for advance 1
     	distributionTab.refresh(textFieldKeyword.getText(), result);
+    	
+    	// Below codes are related to basic 6
+    	if (currentSearchResult != null) {
+        	lastSearchKeyword = currentSearchKeyword;
+    		lastSearchResult = currentSearchResult;
+    	} else {
+    		lastSearchKeyword = textFieldKeyword.getText();
+    		lastSearchResult = result;
+    	}
+    	currentSearchKeyword = textFieldKeyword.getText();
+    	currentSearchResult = result;
+    	lastSearchMenuItem.setDisable(false);
     }
     
     /**
@@ -97,7 +119,26 @@ public class Controller {
      */
     @FXML
     private void actionNew() {
-    	System.out.println("actionNew");
+    	lastSearchMenuItem.setDisable(true);
+    	String output = "";
+    	for (Item item : lastSearchResult) {
+    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
+    	}
+    	textAreaConsole.setText(output);
+    	
+    	textFieldKeyword.setText(lastSearchKeyword);
+    	
+    	distributionTab.refresh(lastSearchKeyword, lastSearchResult);
+    }
+    
+    /**
+     * Called when the close button is pressed. Initialize all the tabs.
+     */
+    @FXML
+    private void actionClose() {
+    	textAreaConsole.setText("");
+    	textFieldKeyword.setText("");
+    	distributionTab.initialize();
     }
     
     /**
@@ -126,7 +167,7 @@ public class Controller {
      * Called when the 'Quit' menu item is pressed. Quit the application and close all connection.
      */
     @FXML
-    private void quit() {
+    private void actionQuit() {
     	Platform.exit();
     }
 }
