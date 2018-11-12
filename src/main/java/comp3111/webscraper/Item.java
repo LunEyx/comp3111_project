@@ -46,6 +46,9 @@ public class Item {
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
+	public Date getDate() {
+		return postedDate;
+	}
 	public void setDate(Date inDate) {
 		this.postedDate = inDate;
 	}
