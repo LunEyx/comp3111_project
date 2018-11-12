@@ -116,8 +116,6 @@ public class Controller {
     @FXML
     private void actionNew() {
     	System.out.println("actionNew");
-    }
-    
-   
+    }   
 }
 
