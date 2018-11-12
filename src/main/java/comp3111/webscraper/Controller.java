@@ -10,7 +10,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Hyperlink;
+
+import java.util.Date;
 import java.util.List;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 
 
 /**
@@ -44,6 +48,19 @@ public class Controller {
     @FXML
 	private BarChart<String, Number> barChartHistogram;
     
+    //TableTab FXML start
+    @FXML
+    private TableView<Item> table_main;
+    @FXML
+    private TableColumn<Item, String> table_col_title;
+    @FXML
+    private TableColumn<Item, Double> table_col_price;
+    @FXML
+    private TableColumn<Item, Hyperlink> table_col_url;
+    @FXML
+    private TableColumn<Item, Date> table_col_posted_date;
+    //TableTab FXML end
+    
     private WebScraper scraper;
     private List<Item> items;
     
@@ -67,7 +84,7 @@ public class Controller {
     private void initialize() {
     	consoleTab = new ConsoleTab();
     	summaryTab = new SummaryTab();
-    	tableTab = new TableTab();
+    	tableTab = new TableTab(table_main, table_col_title, table_col_price, table_col_url, table_col_posted_date);
     	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
     	trendTab = new TrendTab();
     }
@@ -87,6 +104,9 @@ public class Controller {
     	
     	// This line is for advance 1
     	distributionTab.refresh(textFieldKeyword.getText(), result);
+    	
+    	//This line is for basic 4
+    	tableTab.refresh_result(result);
     }
     
     /**
