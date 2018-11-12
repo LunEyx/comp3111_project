@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Hyperlink;
 import java.util.List;
 
@@ -43,7 +44,17 @@ public class Controller {
     @FXML
     private TextArea textAreaConsole;
     
+    @FXML
+	private BarChart<String, Number> barChartHistogram;
+    
     private WebScraper scraper;
+    private List<Item> items;
+    
+    private ConsoleTab consoleTab;
+    private SummaryTab summaryTab;
+    private TableTab tableTab;
+    private DistributionTab distributionTab;
+    private TrendTab trendTab;
     
     /**
      * Default controller
@@ -57,7 +68,11 @@ public class Controller {
      */
     @FXML
     private void initialize() {
-    	
+    	consoleTab = new ConsoleTab();
+    	summaryTab = new SummaryTab();
+    	tableTab = new TableTab();
+    	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
+    	trendTab = new TrendTab();
     }
     
     /**
@@ -73,7 +88,8 @@ public class Controller {
     	}
     	textAreaConsole.setText(output);
     	
-    	
+    	// This line is for advance 1
+    	distributionTab.refresh(textFieldKeyword.getText(), result);
     }
     
     /**
