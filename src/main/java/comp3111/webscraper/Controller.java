@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
@@ -138,7 +139,15 @@ public class Controller {
     private void actionClose() {
     	textAreaConsole.setText("");
     	textFieldKeyword.setText("");
+    	
+    	labelCount.setText("-");
+    	labelPrice.setText("-");
+    	labelMin.setText("-");
+    	labelLatest.setText("-");
+    	
     	distributionTab.initialize();
+    	tableTab.initialize();
+    	trendTab.initialize();
     }
     
     /**
