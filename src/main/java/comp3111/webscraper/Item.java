@@ -49,7 +49,7 @@ public class Item {
 	public void setDate(Date inDate) {
 		this.postedDate = inDate;
 	}
-	public String getPosted_date() {
+	public String getPostedDate() {
 		String temp;
 		temp = this.postedDate.toString().substring(4, 7); //get the month
 		temp += ' ';
