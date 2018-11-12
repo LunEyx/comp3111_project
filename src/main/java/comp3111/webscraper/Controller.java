@@ -16,6 +16,8 @@ import java.util.List;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
+import javafx.stage.FileChooser;
+
 
 /**
  * 
@@ -50,15 +52,15 @@ public class Controller {
     
     //TableTab FXML start
     @FXML
-    private TableView<Item> table_main;
+    private TableView<Item> tableMain;
     @FXML
-    private TableColumn<Item, String> table_col_title;
+    private TableColumn<Item, String> tableColTitle;
     @FXML
-    private TableColumn<Item, Double> table_col_price;
+    private TableColumn<Item, Double> tableColPrice;
     @FXML
-    private TableColumn<Item, Hyperlink> table_col_url;
+    private TableColumn<Item, Hyperlink> tableColUrl;
     @FXML
-    private TableColumn<Item, Date> table_col_posted_date;
+    private TableColumn<Item, Date> tableColPostedDate;
     //TableTab FXML end
     
     private WebScraper scraper;
@@ -84,7 +86,7 @@ public class Controller {
     private void initialize() {
     	consoleTab = new ConsoleTab();
     	summaryTab = new SummaryTab();
-    	tableTab = new TableTab(table_main, table_col_title, table_col_price, table_col_url, table_col_posted_date);
+    	tableTab = new TableTab(tableMain, tableColTitle, tableColPrice, tableColUrl, tableColPostedDate);
     	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
     	trendTab = new TrendTab();
     }
@@ -106,7 +108,7 @@ public class Controller {
     	distributionTab.refresh(textFieldKeyword.getText(), result);
     	
     	//This line is for basic 4
-    	tableTab.refresh_result(result);
+    	tableTab.refreshResult(result);
     }
     
     /**
@@ -115,6 +117,23 @@ public class Controller {
     @FXML
     private void actionNew() {
     	System.out.println("actionNew");
+    }
+    
+    @FXML
+    private void saveToFile() {
+    	System.out.println("Save");
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Save search record");
+    	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
+    	fc.showSaveDialog(null);
+    }
+    @FXML
+    private void loadFromFile() {
+    	System.out.println("Load");
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Load a search record");
+    	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
+    	fc.showOpenDialog(null);
     }
 }
 
