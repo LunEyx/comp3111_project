@@ -1,6 +1,7 @@
 package comp3111.webscraper;
 
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -8,6 +9,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.util.Vector;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -99,16 +101,20 @@ public class WebScraper {
 				HtmlElement htmlItem = (HtmlElement) items.get(i);
 				HtmlAnchor itemAnchor = ((HtmlAnchor) htmlItem.getFirstByXPath(".//p[@class='result-info']/a"));
 				HtmlElement spanPrice = ((HtmlElement) htmlItem.getFirstByXPath(".//a/span[@class='result-price']"));
-
+				
+				HtmlElement spanDate = ((HtmlElement) htmlItem.getFirstByXPath(".//p[@class='result-info']/time"));
+				
 				// It is possible that an item doesn't have any price, we set the price to 0.0
 				// in this case
 				String itemPrice = spanPrice == null ? "0.0" : spanPrice.asText();
 
 				Item item = new Item();
 				item.setTitle(itemAnchor.asText());
-				item.setUrl(DEFAULT_URL + itemAnchor.getHrefAttribute());
-
+				item.setUrl(DEFAULT_URL + itemAnchor.getHrefAttribute(), itemAnchor.getHrefAttribute());
 				item.setPrice(new Double(itemPrice.replace("$", "")));
+			
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+				item.setDate(formatter.parse(spanDate.getAttribute("datetime")));
 
 				result.add(item);
 			}

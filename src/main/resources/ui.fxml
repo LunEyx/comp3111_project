@@ -102,12 +102,12 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="table_main">
                                             <columns>
-                                              <TableColumn editable="false" prefWidth="154.0" text="Title" />
-                                              <TableColumn editable="false" prefWidth="90.0" text="Price" />
-                                                <TableColumn editable="false" prefWidth="78.0" text="URL" />
-                                                <TableColumn editable="false" prefWidth="88.0" text="Posted Date" />
+                                              <TableColumn editable="false" prefWidth="154.0" text="Title" fx:id="table_col_title" />
+                                              <TableColumn editable="false" prefWidth="90.0" text="Price" fx:id="table_col_price" />
+                                                <TableColumn editable="false" prefWidth="78.0" text="URL" fx:id="table_col_url" />
+                                                <TableColumn editable="false" prefWidth="88.0" text="Posted Date" fx:id="table_col_posted_date" />
                                             </columns>
                                           </TableView>
                                        </children>
