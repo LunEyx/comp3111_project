@@ -12,45 +12,45 @@ import javafx.scene.control.Hyperlink;
 
 public class TableTab {
 	private ObservableList<Item> result;
-	private TableView<Item> table_main;
-	private TableColumn<Item, String> table_col_title;
-	private TableColumn<Item, Double> table_col_price;
-	private TableColumn<Item, Hyperlink> table_col_url;
-	private TableColumn<Item, String> table_col_posted_date;
+	private TableView<Item> tableMain;
+	private TableColumn<Item, String> tableColTitle;
+	private TableColumn<Item, Double> tableColPrice;
+	private TableColumn<Item, Hyperlink> tableColUrl;
+	private TableColumn<Item, String> tableColPostedDate;
 	
-	public TableTab(TableView<Item> in_table_main, TableColumn in_table_col_title, TableColumn in_table_col_price, TableColumn in_table_col_url, TableColumn in_table_col_posted_date){
+	public TableTab(TableView<Item> inTableMain, TableColumn inTableColTitle, TableColumn inTableColPrice, TableColumn inTableColUrl, TableColumn inTableColPostedDate){
 		result = FXCollections.observableArrayList(Collections.<Item>emptyList());
-		this.table_main = in_table_main;
-		this.table_col_title = in_table_col_title;
-		this.table_col_price = in_table_col_price;
-		this.table_col_url = in_table_col_url;
-		this.table_col_posted_date = in_table_col_posted_date;
+		this.tableMain = inTableMain;
+		this.tableColTitle = inTableColTitle;
+		this.tableColPrice = inTableColPrice;
+		this.tableColUrl = inTableColUrl;
+		this.tableColPostedDate = inTableColPostedDate;
 		
-		this.table_col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
-		this.table_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
-		this.table_col_url.setCellValueFactory(new PropertyValueFactory<>("hyperlink"));
-		this.table_col_posted_date.setCellValueFactory(new PropertyValueFactory<>("posted_date"));
+		this.tableColTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+		this.tableColPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+		this.tableColUrl.setCellValueFactory(new PropertyValueFactory<>("hyperlink"));
+		this.tableColPostedDate.setCellValueFactory(new PropertyValueFactory<>("posted_date"));
 		
-		this.table_col_title.setSortable(true);
-		this.table_col_price.setSortable(true);
-		this.table_col_url.setSortable(true);
-		this.table_col_posted_date.setSortable(true);
+		this.tableColTitle.setSortable(true);
+		this.tableColPrice.setSortable(true);
+		this.tableColUrl.setSortable(true);
+		this.tableColPostedDate.setSortable(true);
 		
-		refresh_table();
+		refreshTable();
 	}
 	
 	public void initialize() {
-		this.table_main.getItems().clear();
+		this.tableMain.getItems().clear();
 	}
-	
-	public void refresh_result(List<Item> in_result) {
-		this.result = FXCollections.observableArrayList(in_result);
-		refresh_table();
+
+	public void refreshResult(List<Item> inResult) {
+		this.result = FXCollections.observableArrayList(inResult);
+		refreshTable();
 		return;
 	}
 	
-	private void refresh_table() {
-		this.table_main.setItems(result);
+	private void refreshTable() {
+		this.tableMain.setItems(result);
 		return;
 	}
 }
