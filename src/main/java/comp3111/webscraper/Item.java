@@ -2,6 +2,7 @@ package comp3111.webscraper;
 
 import java.awt.Desktop;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,13 +47,19 @@ public class Item {
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
+  
 	public Date getDate() {
 		return postedDate;
 	}
+  
 	public void setDate(Date inDate) {
+    this.postedDate = inDate;
+  }
+  
+	public void setPostedDate(Date inDate) {
 		this.postedDate = inDate;
 	}
-	public String getPosted_date() {
+	public String getPostedDate() {
 		String temp;
 		temp = this.postedDate.toString().substring(4, 7); //get the month
 		temp += ' ';
@@ -60,5 +67,18 @@ public class Item {
 		temp += ", ";
 		temp += this.postedDate.toString().substring(24, 28); //get the year		
 		return temp;
+	}
+	
+	public void setUrl(String url) {//this is for after loading a search record
+		System.out.println(url);
+		for(int i=0; i<url.length()-8; i++) {
+			if (url.substring(i, i+8).equals("https://")) this.setUrl(url.substring(0, i), url.substring(i, url.length()));
+		}
+	}
+	public void setPostedDate(String inDate) {//this is for after loading a search record
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+		try{
+			this.setPostedDate(formatter.parse(inDate));
+		}catch (Exception e) {}
 	}
 }

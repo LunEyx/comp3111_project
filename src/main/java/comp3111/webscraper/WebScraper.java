@@ -114,7 +114,7 @@ public class WebScraper {
 				item.setPrice(new Double(itemPrice.replace("$", "")));
 			
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-				item.setDate(formatter.parse(spanDate.getAttribute("datetime")));
+				item.setPostedDate(formatter.parse(spanDate.getAttribute("datetime")));
 
 				result.add(item);
 			}
