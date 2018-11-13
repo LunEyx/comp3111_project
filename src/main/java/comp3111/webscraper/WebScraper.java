@@ -110,7 +110,7 @@ public class WebScraper {
 
 				Item item = new Item();
 				item.setTitle(itemAnchor.asText());
-				item.setUrl(DEFAULT_URL + itemAnchor.getHrefAttribute(), itemAnchor.getHrefAttribute());
+				item.setUrl(itemAnchor.getHrefAttribute(), itemAnchor.getHrefAttribute());
 				item.setPrice(new Double(itemPrice.replace("$", "")));
 			
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
