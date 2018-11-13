@@ -46,18 +46,17 @@ import javafx.scene.control.TableColumn;
  */
 public class Controller {
 
+	//SummaryTab FXML start
     @FXML 
     private Label labelCount; 
-
     @FXML 
     private Label labelPrice; 
-
     @FXML 
     private Hyperlink labelMin; 
-
     @FXML 
     private Hyperlink labelLatest; 
-
+    //SummaryTab FXML end
+    
     @FXML
     private TextField textFieldKeyword;
     
@@ -67,10 +66,9 @@ public class Controller {
     @FXML
 	private BarChart<String, Number> barChartHistogram;
     
-
     @FXML
     private MenuItem lastSearchMenuItem;
-
+    
     //TableTab FXML start
     @FXML
     private TableView<Item> tableMain;
@@ -112,7 +110,7 @@ public class Controller {
     @FXML
     private void initialize() {
     	consoleTab = new ConsoleTab();
-    	summaryTab = new SummaryTab();
+    	summaryTab = new SummaryTab(labelCount, labelPrice, labelMin, labelLatest);
     	tableTab = new TableTab(tableMain, tableColTitle, tableColPrice, tableColUrl, tableColPostedDate);
     	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
     	trendTab = new TrendTab();
@@ -133,6 +131,9 @@ public class Controller {
     	
     	// This line is for advance 1
     	distributionTab.refresh(textFieldKeyword.getText(), result);
+    	
+    	// This line is for basic 1
+    	summaryTab.refresh(result);
     	
     	// Below codes are related to basic 6
     	if (currentSearchResult != null) {
@@ -177,7 +178,7 @@ public class Controller {
     	textAreaConsole.setText("");
     	textFieldKeyword.setText("");
     	
-    	labelCount.setText("-");
+    	labelCount.setText("0");
     	labelPrice.setText("-");
     	labelMin.setText("-");
     	labelLatest.setText("-");
@@ -300,4 +301,3 @@ public class Controller {
     	}
     }
 }
-

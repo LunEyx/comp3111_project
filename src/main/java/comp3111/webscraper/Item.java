@@ -10,9 +10,9 @@ import javafx.scene.control.Hyperlink;
 
 
 public class Item {
-	private String title ; 
-	private double price ;
-	private String url ;
+	private String title; 
+	private double price;
+	private String url;
 	private Date postedDate;
 	private Hyperlink hyperlink;
 	
@@ -47,6 +47,15 @@ public class Item {
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
+  
+	public Date getDate() {
+		return postedDate;
+	}
+  
+	public void setDate(Date inDate) {
+    this.postedDate = inDate;
+  }
+  
 	public void setPostedDate(Date inDate) {
 		this.postedDate = inDate;
 	}
