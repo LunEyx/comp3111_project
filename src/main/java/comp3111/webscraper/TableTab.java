@@ -1,7 +1,6 @@
 package comp3111.webscraper;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;

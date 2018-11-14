@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
@@ -29,12 +30,6 @@ import javafx.stage.FileChooser;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-
-
-
 
 /**
  * 
@@ -83,13 +78,10 @@ public class Controller {
     //TableTab FXML end
     
     private WebScraper scraper;
-    private List<Item> items;
     
-    private ConsoleTab consoleTab;
     private SummaryTab summaryTab;
     private TableTab tableTab;
     private DistributionTab distributionTab;
-    private TrendTab trendTab;
     
     private String currentSearchKeyword;
     private List<Item> currentSearchResult;
@@ -109,11 +101,9 @@ public class Controller {
      */
     @FXML
     private void initialize() {
-    	consoleTab = new ConsoleTab();
     	summaryTab = new SummaryTab(labelCount, labelPrice, labelMin, labelLatest);
     	tableTab = new TableTab(tableMain, tableColTitle, tableColPrice, tableColUrl, tableColPostedDate);
     	distributionTab = new DistributionTab(barChartHistogram, textAreaConsole);
-    	trendTab = new TrendTab();
     }
     
     /**
@@ -185,7 +175,6 @@ public class Controller {
     	
     	distributionTab.initialize();
     	tableTab.initialize();
-    	trendTab.initialize();
     }
     
     /**
