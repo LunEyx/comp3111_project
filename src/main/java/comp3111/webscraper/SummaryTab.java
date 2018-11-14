@@ -25,6 +25,16 @@ public class SummaryTab {
 		this.labelLatest = labelLatest;
 	}
 	
+	/**
+	 * Clear the output data and set labels to invalid values.
+	 */
+	public void initialize() {
+		labelCount.setText("0");
+    	labelPrice.setText("-");
+    	labelMin.setText("-");
+    	labelLatest.setText("-");
+	}
+	
 	public void refresh(List<Item> items) {
 		int itemsCount = 0;
 		double itemsPrice = 0;

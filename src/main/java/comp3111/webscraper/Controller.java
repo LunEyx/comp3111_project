@@ -152,11 +152,9 @@ public class Controller {
     		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
     	}
     	textAreaConsole.setText(output);
-    	
     	textFieldKeyword.setText(lastSearchKeyword);
-    	
+    	summaryTab.refresh(lastSearchResult);
     	distributionTab.refresh(lastSearchKeyword, lastSearchResult);
-    	
     	tableTab.refreshResult(lastSearchResult);
     }
     
@@ -167,12 +165,7 @@ public class Controller {
     private void actionClose() {
     	textAreaConsole.setText("");
     	textFieldKeyword.setText("");
-    	
-    	labelCount.setText("0");
-    	labelPrice.setText("-");
-    	labelMin.setText("-");
-    	labelLatest.setText("-");
-    	
+    	summaryTab.initialize();
     	distributionTab.initialize();
     	tableTab.initialize();
     }
