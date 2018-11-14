@@ -39,6 +39,9 @@ public class TableTab {
 		refreshTable();
 	}
 	
+	/**
+	 * Clear all the data of the table.
+	 */
 	public void initialize() {
 		this.tableMain.getItems().clear();
 	}
