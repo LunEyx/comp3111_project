@@ -152,7 +152,7 @@ public class Controller {
     }
     
     /**
-     * Called when the new button is pressed. Very dummy action - print something in the command prompt.
+     * Called when the 'Last Search' button is pressed. Let all tab display last search result.
      */
     @FXML
     private void actionNew() {
@@ -217,6 +217,7 @@ public class Controller {
     private void actionQuit() {
     	Platform.exit();
     }
+    
     @FXML
     private void saveToFile() {
     	System.out.println("Save");
