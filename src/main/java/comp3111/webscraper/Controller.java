@@ -147,15 +147,7 @@ public class Controller {
     @FXML
     private void actionNew() {
     	lastSearchMenuItem.setDisable(true);
-    	String output = "";
-    	for (Item item : lastSearchResult) {
-    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
-    	}
-    	textAreaConsole.setText(output);
-    	textFieldKeyword.setText(lastSearchKeyword);
-    	summaryTab.refresh(lastSearchResult);
-    	distributionTab.refresh(lastSearchKeyword, lastSearchResult);
-    	tableTab.refreshResult(lastSearchResult);
+    	refreshAllTabs(lastSearchKeyword, lastSearchResult);
     }
     
     /**
@@ -163,11 +155,7 @@ public class Controller {
      */
     @FXML
     private void actionClose() {
-    	textAreaConsole.setText("");
-    	textFieldKeyword.setText("");
-    	summaryTab.initialize();
-    	distributionTab.initialize();
-    	tableTab.initialize();
+    	initializeAllTabs();
     }
     
     /**
@@ -303,5 +291,34 @@ public class Controller {
 				
 			textAreaConsole.setText(output);	
     	}
+    }
+    
+    /**
+     * Clear all the data of all the tabs and change them to default output.
+     */
+    private void initializeAllTabs() {
+    	textAreaConsole.setText("");
+    	textFieldKeyword.setText("");
+    	summaryTab.initialize();
+    	distributionTab.initialize();
+    	tableTab.initialize();
+    }
+    
+    /**
+     * Refresh all the tabs by the search result.
+     * 
+     * @param keyword - search keyword
+     * @param items - search result
+     */
+    private void refreshAllTabs(String keyword, List<Item> items) {
+    	String output = "";
+    	for (Item item : items) {
+    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
+    	}
+    	textAreaConsole.setText(output);
+    	textFieldKeyword.setText(keyword);
+    	summaryTab.refresh(items);
+    	distributionTab.refresh(keyword, items);
+    	tableTab.refreshResult(items);
     }
 }
