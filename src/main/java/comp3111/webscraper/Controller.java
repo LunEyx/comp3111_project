@@ -213,6 +213,12 @@ public class Controller {
     		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
     		          new FileOutputStream(outputFile)));
     		          
+    		    //output the keyword searched first
+    		    writer.write(textFieldKeyword.getText());
+    		    writer.newLine();
+    		    writer.newLine();
+    		    
+    		    //output every item in the result list
     		    for(Item temp : currentSearchResult) {
     		    	writer.write(temp.getTitle());
     		    	writer.newLine();
@@ -240,25 +246,29 @@ public class Controller {
     	inputFile = fc.showOpenDialog(null);
     	
     	if(inputFile != null) {
-    		String tempTitle;
-		    String tempPrice;
-		    String tempUrl;
-		    String tempPostedDate;
+    		String tempKeyWord = null;
+    		String tempTitle = null;
+		    String tempPrice = null;
+		    String tempUrl = null;
+		    String tempPostedDate = null;
 		    Boolean readableFile = true;
 		    Item tempItem;
 		    Vector<Item> tempList = new Vector<Item>();
-//		    
-    		try {
+
+		    try {
     		    BufferedReader reader = new BufferedReader(new InputStreamReader(
     		          new FileInputStream(inputFile)));
     		    
-    		    while((tempTitle = reader.readLine()) != null) {
+    		    tempKeyWord = reader.readLine(); //get the keyword in first line
+    		    reader.readLine(); //read the empty spacing line
+    		    
+    		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
     		    	tempPrice = reader.readLine();
     		    	tempUrl = reader.readLine();
     		    	tempPostedDate = reader.readLine();
-    		    	reader.readLine();
+    		    	reader.readLine(); //read the empty spacing line
     		    	
-    		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) 
+    		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
     		    		readableFile = false;
     		    	else {
     		    		tempItem = new Item();
@@ -269,18 +279,29 @@ public class Controller {
     		    		tempList.add(tempItem);
     		    	}
     		    }
+    		    reader.close();
     		}catch (IOException ex) {
     			readableFile = false;
     		}catch (NumberFormatException e) {
     			readableFile = false;
     		}
     		
+    		String output = "--Data Loading from " + inputFile + "--\n";
 			if(readableFile) {
-				System.out.println("Reading SUccessful");
+				for (Item item : tempList) {
+		    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
+		    	}
+				textFieldKeyword.setText(tempKeyWord);
 				currentSearchResult = tempList;
+				summaryTab.refresh(currentSearchResult);
 				tableTab.refreshResult(currentSearchResult);
-			}else
-		    	System.out.println("Un-readable File Format");
+				distributionTab.refresh(textFieldKeyword.getText(), currentSearchResult);
+			}else {
+				output = "Data File" + inputFile + " is an Invalid File";
+				this.actionClose();
+			}
+				
+			textAreaConsole.setText(output);	
     	}
     }
 }
