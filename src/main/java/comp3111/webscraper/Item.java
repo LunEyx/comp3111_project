@@ -31,15 +31,15 @@ public class Item {
 	public String getUrl() {
 		return url;
 	}
-	public void setUrl(String url, String url2) {
+	public void setUrl(String url) {
 		this.url = url;
 		this.hyperlink = new Hyperlink();
-		this.hyperlink.setText(url2);
+		this.hyperlink.setText(url);
 		this.hyperlink.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-				    Desktop.getDesktop().browse(new URL(url2).toURI());
+				    Desktop.getDesktop().browse(new URL(url).toURI());
 				} catch (Exception be) {}
 			}
 		});
@@ -68,13 +68,7 @@ public class Item {
 		temp += this.postedDate.toString().substring(24, 28); //get the year		
 		return temp;
 	}
-	
-	public void setUrl(String url) {//this is for after loading a search record
-		System.out.println(url);
-		for(int i=0; i<url.length()-8; i++) {
-			if (url.substring(i, i+8).equals("https://")) this.setUrl(url.substring(0, i), url.substring(i, url.length()));
-		}
-	}
+
 	public void setPostedDate(String inDate) {//this is for after loading a search record
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
 		try{
