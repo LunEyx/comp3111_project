@@ -19,18 +19,23 @@ public class Item {
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
 	public double getPrice() {
 		return price;
 	}
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
 	public String getUrl() {
 		return url;
 	}
+	
 	public void setUrl(String url) {
 		this.url = url;
 		this.hyperlink = new Hyperlink();
@@ -44,21 +49,26 @@ public class Item {
 			}
 		});
 	}
+	
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
-  
-	public Date getDate() {
-		return postedDate;
-	}
-  
-	public void setDate(Date inDate) {
-    this.postedDate = inDate;
-  }
-  
-	public void setPostedDate(Date inDate) {
+	
+	public void setPostedDate(Date inDate) { //this is called by WebScrapper
 		this.postedDate = inDate;
 	}
+
+	public void setPostedDate(String inDate) {//this is for after loading a search record
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+		try{
+			this.setPostedDate(formatter.parse(inDate));
+		}catch (Exception e) {}
+	}
+	
+	public Date getDate() { //this is for getting the posted date in Date type (for Summary Tab, comparing dates of products)
+		return this.postedDate;
+	}
+	
 	public String getPostedDate() {
 		String temp;
 		temp = this.postedDate.toString().substring(4, 7); //get the month
@@ -67,12 +77,5 @@ public class Item {
 		temp += ", ";
 		temp += this.postedDate.toString().substring(24, 28); //get the year		
 		return temp;
-	}
-
-	public void setPostedDate(String inDate) {//this is for after loading a search record
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-		try{
-			this.setPostedDate(formatter.parse(inDate));
-		}catch (Exception e) {}
 	}
 }
