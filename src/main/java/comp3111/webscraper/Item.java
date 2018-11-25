@@ -28,7 +28,7 @@ public class Item {
 	/**
      * Setter: set the title data member of Item object.
      * 
-     * @param title - The title of Item object searched
+     * @param title The title of Item object searched
      */
 	public void setTitle(String title) {
 		this.title = title;
@@ -46,7 +46,7 @@ public class Item {
 	/**
      * Setter: set the price data member of Item object.
      * 
-     * @param price - The price of Item object searched
+     * @param price The price of Item object searched
      */
 	public void setPrice(double price) {
 		this.price = price;
@@ -64,7 +64,7 @@ public class Item {
 	/**
      * Setter: set the URL and Hyperlink data member of Item object.
      * 
-     * @param url - The URL of Item object searched
+     * @param url The URL of Item object searched
      */
 	public void setUrl(String url) {
 		this.url = url;
@@ -116,7 +116,7 @@ public class Item {
 	/**
      * Setter: set the posted date data member of Item object. Used with results scrapped online.
      * 
-     * @param inDate - The posted date (of Date type variable) of Item object searched
+     * @param inDate The posted date (of Date type variable) of Item object searched
      */
 	public void setPostedDate(Date inDate) { //this is called by WebScrapper
 		this.postedDate = inDate;
@@ -125,7 +125,7 @@ public class Item {
 	/**
      * Setter: set the posted date data member of Item object. Used with results loaded locally.
      * 
-     * @param inDate - The posted date (of String type variable) of Item object
+     * @param inDate The posted date (of String type variable) of Item object
      */
 	public void setPostedDate(String inDate) {//this is for after loading a search record
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");

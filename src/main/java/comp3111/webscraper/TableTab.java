@@ -20,11 +20,11 @@ public class TableTab {
 	/**
 	 * Constructor for TableTab.
 	 * 
-	 * @param inTableMain - reference variable to FXML TableView (for Item objects) in TableTab which is the whole table base itself.
-	 * @param inTableColTitle - reference variable to FXML TableColumn (for String) inside the TableView responsible for showing title of items.
-	 * @param inTableColPrice - reference variable to FXML TableColumn (for Double) inside the TableView responsible for showing price of items.
-	 * @param inTableColUrl  - reference variable to FXML TableColumn (for Hyperlink) inside the TableView responsible for showing URL of items.
-	 * @param inTableColPostedDate  - reference variable to FXML TableColumn (for String) inside the TableView responsible for showing posted date of items.
+	 * @param inTableMain reference variable to FXML TableView (for Item objects) in TableTab which is the whole table base itself.
+	 * @param inTableColTitle reference variable to FXML TableColumn (for String) inside the TableView responsible for showing title of items.
+	 * @param inTableColPrice reference variable to FXML TableColumn (for Double) inside the TableView responsible for showing price of items.
+	 * @param inTableColUrl  reference variable to FXML TableColumn (for Hyperlink) inside the TableView responsible for showing URL of items.
+	 * @param inTableColPostedDate  reference variable to FXML TableColumn (for String) inside the TableView responsible for showing posted date of items.
 	 */
 	public TableTab(TableView<Item> inTableMain, TableColumn inTableColTitle, TableColumn inTableColPrice, TableColumn inTableColUrl, TableColumn inTableColPostedDate){
 		result = FXCollections.observableArrayList(Collections.<Item>emptyList());
@@ -57,7 +57,7 @@ public class TableTab {
 	/**
 	 * Refresh the result data member in TableTab with results to be shown, then refresh the table.
 	 * 
-	 * @param inResult - List of Item objects to be shown
+	 * @param inResult List of Item objects to be shown
 	 */
 	public void refreshResult(List<Item> inResult) {
 		this.result = FXCollections.observableArrayList(inResult);
