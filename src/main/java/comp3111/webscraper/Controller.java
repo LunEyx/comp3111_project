@@ -92,7 +92,7 @@ public class Controller {
     
     
     /**
-     * Default controller
+     * Default controller constructor
      */
     public Controller() {
     	scraper = new WebScraper();
