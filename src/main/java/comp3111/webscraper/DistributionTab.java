@@ -110,7 +110,7 @@ public class DistributionTab {
 	 * Refresh the bar chart with data to be shown.
 	 * 
 	 * @param priceData - List of List<Item>, which are Item objects grouped accordingly to price.
-	 * @return boolean Indicator of successful inputing data to bar chart.
+	 * @return boolean Indicator of huge gap exist between groups of price.
 	 */
 	private boolean drawChart(List<List<Item>> priceData) {
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
