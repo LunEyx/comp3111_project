@@ -22,10 +22,10 @@ public class SummaryTab {
 	/**
      * Constructor for SummaryTab.
      * 
-     * @param labelCount - reference variable to FXML label in Summary Tab that shows amount of searched items.
-     * @param labelPrice - reference variable to FXML label in Summary Tab that shows average selling price.
-     * @param labelMin - reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to lowest price item.
-     * @param labelLatest - reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to latest posted item.
+     * @param labelCount reference variable to FXML label in Summary Tab that shows amount of searched items.
+     * @param labelPrice reference variable to FXML label in Summary Tab that shows average selling price.
+     * @param labelMin reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to lowest price item.
+     * @param labelLatest reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to latest posted item.
      */
 	public SummaryTab(Label labelCount, Label labelPrice, Hyperlink labelMin, Hyperlink labelLatest) {
 		this.labelCount = labelCount;
@@ -47,7 +47,7 @@ public class SummaryTab {
 	/**
 	 * Refresh all data of SummaryTab with the results to be shown.
 	 * 
-	 * @param items - List of Item objects to be shown
+	 * @param items List of Item objects to be shown
 	 */
 	public void refresh(List<Item> items) {
 		int itemsCount = 0;

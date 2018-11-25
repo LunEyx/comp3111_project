@@ -28,12 +28,9 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * 
  * @author kevinw
- *
- *
- * Controller class that manage GUI interaction. Please see document about JavaFX for details.
  * 
+ * Controller class that manage GUI interaction. Please see document about JavaFX for details.
  */
 public class Controller {
 
@@ -325,8 +322,8 @@ public class Controller {
     /**
      * Refresh all the tabs by the search result.
      * 
-     * @param keyword - searched keyword
-     * @param items - results to be shown
+     * @param keyword searched keyword
+     * @param items results to be shown
      */
     private void refreshAllTabs(String keyword, List<Item> items) {
     	this.refreshConsole(keyword, items);
@@ -338,8 +335,8 @@ public class Controller {
     /**
      * Refresh console and keyword text area
      * 
-     * @param keyword - searched keyword
-     * @param items - results to be shown
+     * @param keyword searched keyword
+     * @param items results to be shown
      */
     private void refreshConsole(String keyword, List<Item> items){
     	String output = "";
