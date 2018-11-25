@@ -22,7 +22,7 @@ public class Item {
 	/**
      * Getter: return the title of Item object.
      * 
-     * @return String Title of Item object
+     * @return String - Title of Item object
      */
 	public String getTitle() {
 		return title;
@@ -40,7 +40,7 @@ public class Item {
 	/**
      * Getter: return the price of Item object.
      * 
-     * @return Double Price of Item object
+     * @return Double - Price of Item object
      */
 	public double getPrice() {
 		return price;
@@ -58,7 +58,7 @@ public class Item {
 	/**
      * Getter: return the URL of Item object.
      * 
-     * @return String URL of Item object
+     * @return String - URL of Item object
      */
 	public String getUrl() {
 		return url;
@@ -86,7 +86,7 @@ public class Item {
 	/**
      * Getter: return the URL in Hyperlink form of Item object.
      * 
-     * @return Hyperlink URL of Item object
+     * @return Hyperlink - URL of Item object
      */
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
@@ -95,7 +95,7 @@ public class Item {
 	/**
      * Getter: return the posted date of Item object. Mainly for internal comparison use.
      * 
-     * @return Date Posted date of Item object
+     * @return Date - Posted date of Item object
      */
 	public Date getDate() { //this is for getting the posted date in Date type (for Summary Tab, comparing dates of products)
 		return this.postedDate;
@@ -104,7 +104,7 @@ public class Item {
 	/**
      * Getter: return the posted date of Item object. Mainly for GUI output.
      * 
-     * @return String Posted date of Item object
+     * @return String - Posted date of Item object
      */
 	public String getPostedDate() {
 		String temp;
