@@ -8,7 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 
-
+/**
+ * Item class for creating and regulating objects for storing searched data.
+ *
+ */
 public class Item {
 	private String title; 
 	private double price;

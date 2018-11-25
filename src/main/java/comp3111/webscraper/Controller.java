@@ -28,9 +28,8 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * @author kevinw
- * 
  * Controller class that manage GUI interaction. Please see document about JavaFX for details.
+ * @author kevinw
  */
 public class Controller {
 

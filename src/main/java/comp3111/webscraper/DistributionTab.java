@@ -8,6 +8,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * DistributionTab class for manipulating the Distribution Tab
+ *
+ */
 public class DistributionTab {
 	private BarChart<String, Number> barChartHistogram;
 	private TextArea textAreaConsole;
