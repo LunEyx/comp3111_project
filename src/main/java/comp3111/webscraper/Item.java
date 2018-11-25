@@ -16,26 +16,56 @@ public class Item {
 	private Date postedDate;
 	private Hyperlink hyperlink;
 	
+	/**
+     * Getter: return the title of Item object.
+     * 
+     * @return String Title of Item object
+     */
 	public String getTitle() {
 		return title;
 	}
 	
+	/**
+     * Setter: set the title data member of Item object.
+     * 
+     * @param title - The title of Item object searched
+     */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	
+	/**
+     * Getter: return the price of Item object.
+     * 
+     * @return Double Price of Item object
+     */
 	public double getPrice() {
 		return price;
 	}
 	
+	/**
+     * Setter: set the price data member of Item object.
+     * 
+     * @param price - The price of Item object searched
+     */
 	public void setPrice(double price) {
 		this.price = price;
 	}
 	
+	/**
+     * Getter: return the URL of Item object.
+     * 
+     * @return String URL of Item object
+     */
 	public String getUrl() {
 		return url;
 	}
 	
+	/**
+     * Setter: set the URL and Hyperlink data member of Item object.
+     * 
+     * @param url - The URL of Item object searched
+     */
 	public void setUrl(String url) {
 		this.url = url;
 		this.hyperlink = new Hyperlink();
@@ -50,14 +80,29 @@ public class Item {
 		});
 	}
 	
+	/**
+     * Getter: return the URL in Hyperlink form of Item object.
+     * 
+     * @return Hyperlink URL of Item object
+     */
 	public Hyperlink getHyperlink() {
 		return this.hyperlink;
 	}
 	
+	/**
+     * Getter: return the posted date of Item object. Mainly for internal comparison use.
+     * 
+     * @return Date Posted date of Item object
+     */
 	public Date getDate() { //this is for getting the posted date in Date type (for Summary Tab, comparing dates of products)
 		return this.postedDate;
 	}
 	
+	/**
+     * Getter: return the posted date of Item object. Mainly for GUI output.
+     * 
+     * @return String Posted date of Item object
+     */
 	public String getPostedDate() {
 		String temp;
 		temp = this.postedDate.toString().substring(4, 7); //get the month
@@ -68,10 +113,20 @@ public class Item {
 		return temp;
 	}
 	
+	/**
+     * Setter: set the posted date data member of Item object. Used with results scrapped online.
+     * 
+     * @param inDate - The posted date (of Date type variable) of Item object searched
+     */
 	public void setPostedDate(Date inDate) { //this is called by WebScrapper
 		this.postedDate = inDate;
 	}
 
+	/**
+     * Setter: set the posted date data member of Item object. Used with results loaded locally.
+     * 
+     * @param inDate - The posted date (of String type variable) of Item object
+     */
 	public void setPostedDate(String inDate) {//this is for after loading a search record
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
 		try{
