@@ -14,16 +14,31 @@ public class DistributionTab {
 	
 	private List<List<Item>> data;
 	
+	/**
+	 * Constructor for DistributionTab
+	 * 
+	 * @param barChartHistogram - reference variable to FXML BarChart that shows data in a bar chart
+	 * @param textAreaConsole - - reference variable to FXML TextArea which is inside ConsoleTabe
+	 */
 	public DistributionTab(BarChart<String, Number> barChartHistogram, TextArea textAreaConsole) {
 		this.barChartHistogram = barChartHistogram;
 		this.textAreaConsole = textAreaConsole;
 		defaultHistogram();
 	}
 	
+	/**
+	 * Call defaultHistogram() to clear all the data of the bar chart and title.
+	 */
 	public void reset() {
 		defaultHistogram();
 	}
 	
+	/**
+	 * Refresh the bar chart with results to be shown.
+	 * 
+	 * @param keyword - The searched keyword
+	 * @param items - List of Item objects to be shown
+	 */
 	public void refresh(String keyword, List<Item> items) {
 		if (items.isEmpty()) {
 			defaultHistogram();
@@ -43,6 +58,12 @@ public class DistributionTab {
 		}
 	}
 	
+	/**
+	 * Sort all Item objects to be shown according to price.
+	 * 
+	 * @param items - List of currently showing Item objects
+	 * @return List<Item> Sorted list of the input Item objects
+	 */
 	private List<Item> sortItems(List<Item> items) {
 		items.sort((item1, item2) -> {
 			if (item1.getPrice() < item2.getPrice())
@@ -56,6 +77,12 @@ public class DistributionTab {
 		return items;
 	}
 	
+	/**
+	 * Group Item objects to be shown according to their price and return in form of Lists
+	 * 
+	 * @param sortedItems - Sorted list of all Item objects to be shown according to price.
+	 * @return List<List<Item>> Groupings of List<Item> according to price of Item objects
+	 */
 	private List<List<Item>> groupByPrice(List<Item> sortedItems) {
 		List<List<Item>> data = new ArrayList<>();
 		for (Item item : sortedItems) {
@@ -68,6 +95,9 @@ public class DistributionTab {
 		return data;
 	}
 	
+	/**
+	 * Clear all the data of the bar chart and title.
+	 */
 	private void defaultHistogram() {
 		this.barChartHistogram.setTitle("No Result");
 		this.barChartHistogram.getXAxis().setLabel("Dollars ($)");
@@ -76,6 +106,12 @@ public class DistributionTab {
 		this.barChartHistogram.layout();
 	}
 	
+	/**
+	 * Refresh the bar chart with data to be shown.
+	 * 
+	 * @param priceData - List of List<Item>, which are Item objects grouped accordingly to price.
+	 * @return boolean Indicator of huge gap exist between groups of price.
+	 */
 	private boolean drawChart(List<List<Item>> priceData) {
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
 		
