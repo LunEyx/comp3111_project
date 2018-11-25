@@ -65,12 +65,29 @@ public class Item {
 	}
 	
 	/**
-     * Setter: set the URL and Hyperlink data member of Item object.
+     * Setter: set the URL data member of Item object.
      * 
      * @param url The URL of Item object searched
      */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	/**
+     * Getter: return the URL in Hyperlink form of Item object.
+     * 
+     * @return Hyperlink - URL of Item object
+     */
+	public Hyperlink getHyperlink() {
+		return this.hyperlink;
+	}
+	
+	/**
+     * Setter: set the Hyperlink data member of Item object.
+     * 
+     * @param url The URL of Item object searched
+     */
+	public void setHyperlink(String url) {
 		this.hyperlink = new Hyperlink();
 		this.hyperlink.setText(url);
 		this.hyperlink.setOnAction(new EventHandler<ActionEvent>() {
@@ -81,15 +98,6 @@ public class Item {
 				} catch (Exception be) {}
 			}
 		});
-	}
-	
-	/**
-     * Getter: return the URL in Hyperlink form of Item object.
-     * 
-     * @return Hyperlink - URL of Item object
-     */
-	public Hyperlink getHyperlink() {
-		return this.hyperlink;
 	}
 	
 	/**

@@ -29,7 +29,7 @@ import java.util.Vector;
 
 /**
  * Controller class that manage GUI interaction. Please see document about JavaFX for details.
- * @author kevinw
+ * @author kevin
  */
 public class Controller {
 
@@ -263,6 +263,7 @@ public class Controller {
     		    		tempItem.setTitle(tempTitle);
     		    		tempItem.setPrice(Double.parseDouble(tempPrice));
     		    		tempItem.setUrl(tempUrl);
+    		    		tempItem.setHyperlink(tempUrl);
     		    		tempItem.setPostedDate(tempPostedDate);
     		    		tempList.add(tempItem);
     		    	}
