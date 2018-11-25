@@ -54,17 +54,6 @@ public class Item {
 		return this.hyperlink;
 	}
 	
-	public void setPostedDate(Date inDate) { //this is called by WebScrapper
-		this.postedDate = inDate;
-	}
-
-	public void setPostedDate(String inDate) {//this is for after loading a search record
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-		try{
-			this.setPostedDate(formatter.parse(inDate));
-		}catch (Exception e) {}
-	}
-	
 	public Date getDate() { //this is for getting the posted date in Date type (for Summary Tab, comparing dates of products)
 		return this.postedDate;
 	}
@@ -77,5 +66,16 @@ public class Item {
 		temp += ", ";
 		temp += this.postedDate.toString().substring(24, 28); //get the year		
 		return temp;
+	}
+	
+	public void setPostedDate(Date inDate) { //this is called by WebScrapper
+		this.postedDate = inDate;
+	}
+
+	public void setPostedDate(String inDate) {//this is for after loading a search record
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+		try{
+			this.setPostedDate(formatter.parse(inDate));
+		}catch (Exception e) {}
 	}
 }

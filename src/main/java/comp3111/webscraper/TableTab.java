@@ -41,7 +41,7 @@ public class TableTab {
 	/**
 	 * Clear all the data of the table.
 	 */
-	public void initialize() {
+	public void reset() {
 		this.tableMain.getItems().clear();
 	}
 

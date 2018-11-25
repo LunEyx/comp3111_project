@@ -28,7 +28,7 @@ public class SummaryTab {
 	/**
 	 * Clear the output data and set labels to invalid values.
 	 */
-	public void initialize() {
+	public void reset() {
 		labelCount.setText("0");
     	labelPrice.setText("-");
     	labelMin.setText("-");
