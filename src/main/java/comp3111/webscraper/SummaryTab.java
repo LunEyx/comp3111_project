@@ -47,7 +47,7 @@ public class SummaryTab {
 	/**
 	 * Refresh all data of SummaryTab with the results to be shown.
 	 * 
-	 * @param items
+	 * @param items - List of Item objects to be shown
 	 */
 	public void refresh(List<Item> items) {
 		int itemsCount = 0;
