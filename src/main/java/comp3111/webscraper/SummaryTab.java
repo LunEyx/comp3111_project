@@ -24,8 +24,8 @@ public class SummaryTab {
      * 
      * @param labelCount - reference variable to FXML label in Summary Tab that shows amount of searched items.
      * @param labelPrice - reference variable to FXML label in Summary Tab that shows average selling price.
-     * @param labelMin - reference variable to FXML label in Summary Tab that shows Hyperlink to lowest price item.
-     * @param labelLatest - reference variable to FXML label in Summary Tab that shows Hyperlink to latest posted item.
+     * @param labelMin - reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to lowest price item.
+     * @param labelLatest - reference variable to Hyperlink label in Summary Tab that shows Hyperlink to latest posted item.
      */
 	public SummaryTab(Label labelCount, Label labelPrice, Hyperlink labelMin, Hyperlink labelLatest) {
 		this.labelCount = labelCount;
