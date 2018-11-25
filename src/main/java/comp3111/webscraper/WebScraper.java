@@ -82,8 +82,8 @@ public class WebScraper {
 	/**
 	 * The only method implemented in this class, to scrape web content from the craigslist
 	 * 
-	 * @param keyword - the keyword you want to search
-	 * @return A list of Item that has found. A zero size list is return if nothing is found. Null if any exception (e.g. no connectivity)
+	 * @param keyword the keyword you want to search
+	 * @return List&lt;Item&gt; - A list of Item objects for results found online. A zero size list is return if nothing is found. Null if any exception (e.g. no connectivity)
 	 */
 	public List<Item> scrape(String keyword) {
 
