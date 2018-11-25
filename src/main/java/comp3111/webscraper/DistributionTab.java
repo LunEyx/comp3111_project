@@ -31,7 +31,7 @@ public class DistributionTab {
 	}
 	
 	/**
-	 * Call defaultHistogram() to clear all the data of the bar chart and title.
+	 * Call private function defaultHistogram() to clear all the data of the bar chart and title.
 	 */
 	public void reset() {
 		defaultHistogram();
@@ -82,7 +82,7 @@ public class DistributionTab {
 	}
 	
 	/**
-	 * Group Item objects to be shown according to their price and return in form of Lists
+	 * Group Item objects to be shown according to their price and return in form of Lists.
 	 * 
 	 * @param sortedItems Sorted list of all Item objects to be shown according to price.
 	 * @return List<List<Item>> Groupings of List<Item> according to price of Item objects
