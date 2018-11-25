@@ -10,6 +10,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
+/**
+ * SummaryTab class for manipulating the Summary Tab
+ *
+ */
 public class SummaryTab {
 	private Label labelCount;
 	private Label labelPrice;

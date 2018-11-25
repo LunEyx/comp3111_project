@@ -9,6 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Hyperlink;
 
+/**
+ * TableTab class for manipulating the Table Tab
+ *
+ */
 public class TableTab {
 	private ObservableList<Item> result;
 	private TableView<Item> tableMain;

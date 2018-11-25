@@ -28,9 +28,8 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * @author kevinw
- * 
  * Controller class that manage GUI interaction. Please see document about JavaFX for details.
+ * @author kevinw
  */
 public class Controller {
 
@@ -107,7 +106,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Search" button clicked. Show results found by WebScrapper
+     * Show results found by WebScrapper. Trigger Event: "Search" button clicked. 
      */
     @FXML
     private void actionSearch() {
@@ -139,7 +138,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Last Search" button clicked. Let all tab display last search result.
+     * Let all tab display last search result. Trigger Event: "Last Search" button clicked. 
      */
     @FXML
     private void actionNew() {
@@ -149,7 +148,7 @@ public class Controller {
     
     
     /**
-     * Trigger Event: "About Your Team" menu item clicked. Pop a dialog to show team information.
+     * Pop a dialog to show team information. Trigger Event: "About Your Team" menu item clicked. 
      */
     @FXML
     private void showTeamInfo() {
@@ -171,7 +170,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Quit" menu item clicked. Quit the application and close all connection.
+     * Quit the application and close all connection. Trigger Event: "Quit" menu item clicked. 
      */
     @FXML
     private void actionQuit() {
@@ -179,7 +178,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Save" button clicked. Open a file chooser. Save the shown result to an output file.
+     * Save the shown result to an output file. Trigger Event: "Save" button clicked. Opens a file chooser.
      */
     @FXML
     private void saveToFile() {
@@ -221,7 +220,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Load" button clicked. Open a file chooser. Read from an existing file and show the results stored in it.
+     * Read from an existing file and show the results stored in it. Trigger Event: "Load" button clicked. Opens a file chooser.  
      */
     @FXML
     private void loadFromFile() {
@@ -294,7 +293,7 @@ public class Controller {
     }
     
     /**
-     * Trigger Event: "Close" button clicked. Initialize all the tabs.
+     * Initialize all the tabs. Trigger Event: "Close" button clicked. 
      */
     @FXML
     private void actionClose() {
