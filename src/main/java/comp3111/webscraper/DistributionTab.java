@@ -20,7 +20,7 @@ public class DistributionTab {
 		defaultHistogram();
 	}
 	
-	public void initialize() {
+	public void reset() {
 		defaultHistogram();
 	}
 	

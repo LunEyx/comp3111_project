@@ -1,8 +1,4 @@
-/**
- * 
- */
 package comp3111.webscraper;
-
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -52,15 +48,20 @@ public class Controller {
     private Hyperlink labelLatest; 
     //SummaryTab FXML end
     
+    //Console Tab FXML start
     @FXML
     private TextField textFieldKeyword;
     
     @FXML
     private TextArea textAreaConsole;
+  //Console Tab FXML end
     
+    //DistributionTab FXML start
     @FXML
 	private BarChart<String, Number> barChartHistogram;
+    //DistributionTab FXML end
     
+    //Menu Bar FXML
     @FXML
     private MenuItem lastSearchMenuItem;
     
@@ -77,16 +78,18 @@ public class Controller {
     private TableColumn<Item, Date> tableColPostedDate;
     //TableTab FXML end
     
+    //Data members: Tabs and WebScrapper
     private WebScraper scraper;
-    
     private SummaryTab summaryTab;
     private TableTab tableTab;
     private DistributionTab distributionTab;
     
+    //Data members: 
     private String currentSearchKeyword;
     private List<Item> currentSearchResult;
     private String lastSearchKeyword;
     private List<Item> lastSearchResult;
+    
     
     /**
      * Default controller
@@ -97,7 +100,7 @@ public class Controller {
     }
 
     /**
-     * Default initializer. It is empty.
+     * Default initializer. Initialize all member variables of tabs.
      */
     @FXML
     private void initialize() {
@@ -107,42 +110,39 @@ public class Controller {
     }
     
     /**
-     * Called when the search button is pressed.
+     * Trigger Event: "Search" button clicked. Show results found by WebScrapper
      */
     @FXML
     private void actionSearch() {
     	System.out.println("actionSearch: " + textFieldKeyword.getText());
+    	
     	List<Item> result = scraper.scrape(textFieldKeyword.getText());
-    	String output = "";
-    	for (Item item : result) {
-    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
+    	
+    	if(result == null) { //s.t. there is error from the scrapper
+    		String tempKeyword = textFieldKeyword.getText();
+    		this.actionClose(); //clear all tabs
+    		textFieldKeyword.setText(tempKeyword);
+    		textAreaConsole.setText("Error from WebScrapper, empty results");
+    	}else {
+    		// Below codes are related to basic 6
+        	if (currentSearchResult != null) {
+            	lastSearchKeyword = currentSearchKeyword;
+        		lastSearchResult = currentSearchResult;
+        	} else {
+        		lastSearchKeyword = textFieldKeyword.getText();
+        		lastSearchResult = result;
+        	}
+        	currentSearchKeyword = textFieldKeyword.getText();
+        	currentSearchResult = result;
+        	lastSearchMenuItem.setDisable(false);
+    		//end of basic 6
+        	
+        	refreshAllTabs(textFieldKeyword.getText(), result);
     	}
-    	textAreaConsole.setText(output);
-    	
-    	// This line is for advance 1
-    	distributionTab.refresh(textFieldKeyword.getText(), result);
-    	
-    	// This line is for basic 1
-    	summaryTab.refresh(result);
-    	
-    	// Below codes are related to basic 6
-    	if (currentSearchResult != null) {
-        	lastSearchKeyword = currentSearchKeyword;
-    		lastSearchResult = currentSearchResult;
-    	} else {
-    		lastSearchKeyword = textFieldKeyword.getText();
-    		lastSearchResult = result;
-    	}
-    	currentSearchKeyword = textFieldKeyword.getText();
-    	currentSearchResult = result;
-    	lastSearchMenuItem.setDisable(false);
-
-    	//This line is for basic 4
-    	tableTab.refreshResult(result);
     }
     
     /**
-     * Called when the 'Last Search' button is pressed. Let all tab display last search result.
+     * Trigger Event: "Last Search" button clicked. Let all tab display last search result.
      */
     @FXML
     private void actionNew() {
@@ -150,16 +150,9 @@ public class Controller {
     	refreshAllTabs(lastSearchKeyword, lastSearchResult);
     }
     
-    /**
-     * Called when the close button is pressed. Initialize all the tabs.
-     */
-    @FXML
-    private void actionClose() {
-    	initializeAllTabs();
-    }
     
     /**
-     * Called when the 'About Your Team' menu item is pressed. Pop a dialog to show team information.
+     * Trigger Event: "About Your Team" menu item clicked. Pop a dialog to show team information.
      */
     @FXML
     private void showTeamInfo() {
@@ -181,21 +174,27 @@ public class Controller {
     }
     
     /**
-     * Called when the 'Quit' menu item is pressed. Quit the application and close all connection.
+     * Trigger Event: "Quit" menu item clicked. Quit the application and close all connection.
      */
     @FXML
     private void actionQuit() {
     	Platform.exit();
     }
     
+    /**
+     * Trigger Event: "Save" button clicked. Open a file chooser. Save the shown result to an output file.
+     */
     @FXML
     private void saveToFile() {
-    	System.out.println("Save");
+    	System.out.println("Save to File");
+    	
     	FileChooser fc = new FileChooser();
     	File outputFile;
+    	
     	fc.setTitle("Save current search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
     	outputFile = fc.showSaveDialog(null);
+    	
     	if(outputFile != null) {
     		try {
     		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
@@ -206,7 +205,7 @@ public class Controller {
     		    writer.newLine();
     		    writer.newLine();
     		    
-    		    //output every item in the result list
+    		    //output every item in the result list, a spcing line between each item
     		    for(Item temp : currentSearchResult) {
     		    	writer.write(temp.getTitle());
     		    	writer.newLine();
@@ -224,17 +223,22 @@ public class Controller {
     	}
     }
     
+    /**
+     * Trigger Event: "Load" button clicked. Open a file chooser. Read from an existing file and show the results stored in it.
+     */
     @FXML
     private void loadFromFile() {
-    	System.out.println("Load");
+    	System.out.println("Load from File");
+    	
     	FileChooser fc = new FileChooser();
     	File inputFile;
+    	
     	fc.setTitle("Load a search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
     	inputFile = fc.showOpenDialog(null);
     	
     	if(inputFile != null) {
-    		String tempKeyWord = null;
+    		String tempKeyword = null;
     		String tempTitle = null;
 		    String tempPrice = null;
 		    String tempUrl = null;
@@ -247,7 +251,7 @@ public class Controller {
     		    BufferedReader reader = new BufferedReader(new InputStreamReader(
     		          new FileInputStream(inputFile)));
     		    
-    		    tempKeyWord = reader.readLine(); //get the keyword in first line
+    		    tempKeyword = reader.readLine(); //get the keyword in first line
     		    reader.readLine(); //read the empty spacing line
     		    
     		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
@@ -274,19 +278,18 @@ public class Controller {
     			readableFile = false;
     		}
     		
-    		String output = "--Data Loading from " + inputFile + "--\n";
+    		String output; //because have to show extra information, the text of console have to be set explicitly
 			if(readableFile) {
+				currentSearchResult = tempList;
+				refreshAllTabs(tempKeyword, currentSearchResult);
+				
+				output  = "--Data Loading from " + inputFile + "--\n";
 				for (Item item : tempList) {
 		    		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
 		    	}
-				textFieldKeyword.setText(tempKeyWord);
-				currentSearchResult = tempList;
-				summaryTab.refresh(currentSearchResult);
-				tableTab.refreshResult(currentSearchResult);
-				distributionTab.refresh(textFieldKeyword.getText(), currentSearchResult);
 			}else {
-				output = "Data File" + inputFile + " is an Invalid File";
-				this.actionClose();
+				output = "--Data File" + inputFile + " is an Invalid File--";
+				this.resetAllTabs(); //reset all tabs data to empty
 			}
 				
 			textAreaConsole.setText(output);	
@@ -294,31 +297,56 @@ public class Controller {
     }
     
     /**
-     * Clear all the data of all the tabs and change them to default output.
+     * Trigger Event: "Close" button clicked. Initialize all the tabs.
      */
-    private void initializeAllTabs() {
+    @FXML
+    private void actionClose() {
+    	resetAllTabs();
+    }
+    
+    /**
+     * Clear all the data of all the tabs and show default output.
+     */
+    private void resetAllTabs() {
+    	this.resetConsole();
+    	summaryTab.reset();
+    	distributionTab.reset();
+    	tableTab.reset();
+    }
+    
+    /**
+     * Clear all text areas in console tab
+     */
+    private void resetConsole() {
     	textAreaConsole.setText("");
     	textFieldKeyword.setText("");
-    	summaryTab.initialize();
-    	distributionTab.initialize();
-    	tableTab.initialize();
     }
     
     /**
      * Refresh all the tabs by the search result.
      * 
-     * @param keyword - search keyword
-     * @param items - search result
+     * @param keyword - searched keyword
+     * @param items - results to be shown
      */
     private void refreshAllTabs(String keyword, List<Item> items) {
+    	this.refreshConsole(keyword, items);
+    	summaryTab.refresh(items);
+    	distributionTab.refresh(keyword, items);
+    	tableTab.refreshResult(items);
+    }
+    
+    /**
+     * Refresh console and keyword text area
+     * 
+     * @param keyword - searched keyword
+     * @param items - results to be shown
+     */
+    private void refreshConsole(String keyword, List<Item> items){
     	String output = "";
     	for (Item item : items) {
     		output += item.getTitle() + "\t" + item.getPrice() + "\t" + item.getUrl() + "\n";
     	}
     	textAreaConsole.setText(output);
     	textFieldKeyword.setText(keyword);
-    	summaryTab.refresh(items);
-    	distributionTab.refresh(keyword, items);
-    	tableTab.refreshResult(items);
     }
 }
