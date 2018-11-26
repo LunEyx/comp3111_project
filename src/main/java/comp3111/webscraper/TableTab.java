@@ -1,6 +1,7 @@
 package comp3111.webscraper;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -19,7 +20,7 @@ public class TableTab {
 	private TableColumn<Item, String> tableColTitle;
 	private TableColumn<Item, Double> tableColPrice;
 	private TableColumn<Item, Hyperlink> tableColUrl;
-	private TableColumn<Item, String> tableColPostedDate;
+	private TableColumn<Item, Date> tableColPostedDate;
 	
 	/**
 	 * Constructor for TableTab.
@@ -30,7 +31,7 @@ public class TableTab {
 	 * @param inTableColUrl  reference variable to FXML TableColumn (for Hyperlink) inside the TableView responsible for showing URL of items.
 	 * @param inTableColPostedDate  reference variable to FXML TableColumn (for String) inside the TableView responsible for showing posted date of items.
 	 */
-	public TableTab(TableView<Item> inTableMain, TableColumn inTableColTitle, TableColumn inTableColPrice, TableColumn inTableColUrl, TableColumn inTableColPostedDate){
+	public TableTab(TableView<Item> inTableMain, TableColumn<Item, String> inTableColTitle, TableColumn<Item, Double> inTableColPrice, TableColumn<Item, Hyperlink> inTableColUrl, TableColumn<Item, Date> inTableColPostedDate){
 		result = FXCollections.observableArrayList(Collections.<Item>emptyList());
 		this.tableMain = inTableMain;
 		this.tableColTitle = inTableColTitle;
