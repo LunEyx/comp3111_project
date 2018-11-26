@@ -205,31 +205,37 @@ public class Controller {
     	outputFile = fc.showSaveDialog(null);
     	
     	if(outputFile != null) {
-    		try {
-    		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-    		          new FileOutputStream(outputFile)));
-    		          
-    		    //output the keyword searched first
-    		    writer.write(textFieldKeyword.getText());
-    		    writer.newLine();
-    		    writer.newLine();
-    		    
-    		    //output every item in the result list, a spcing line between each item
-    		    for(Item temp : currentSearchResult) {
-    		    	writer.write(temp.getTitle());
-    		    	writer.newLine();
-    		    	writer.write(Double.toString(temp.getPrice()));
-    		    	writer.newLine();
-    		    	writer.write(temp.getUrl());
-    		    	writer.newLine();
-    		    	writer.write(temp.getPostedDate());
-    		    	writer.newLine();
-    		    	writer.newLine();
-    		    }
-    		    
-    		    writer.close();
-    		} catch (IOException ex) {}
+    		fileWritter(outputFile);
     	}
+    }
+    
+    private void fileWritter(File outputFile) {
+    	try {
+		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+		          new FileOutputStream(outputFile)));
+		          
+		    //output the keyword searched first
+		    writer.write(textFieldKeyword.getText());
+		    writer.newLine();
+		    writer.newLine();
+		    
+		    //output every item in the result list, a spcing line between each item
+		    for(Item temp : currentSearchResult) {
+		    	writer.write(temp.getTitle());
+		    	writer.newLine();
+		    	writer.write(Double.toString(temp.getPrice()));
+		    	writer.newLine();
+		    	writer.write(temp.getUrl());
+		    	writer.newLine();
+		    	writer.write(temp.getPostedDate());
+		    	writer.newLine();
+		    	writer.newLine();
+		    }
+		    
+		    writer.close();
+		} catch (IOException ex) {
+			
+		}
     }
     
     /**
@@ -247,54 +253,15 @@ public class Controller {
     	inputFile = fc.showOpenDialog(null);
     	
     	if(inputFile != null) {
-    		String tempKeyword = null;
-    		String tempTitle = null;
-		    String tempPrice = null;
-		    String tempUrl = null;
-		    String tempPostedDate = null;
-		    Boolean readableFile = true;
-		    Item tempItem;
-		    Vector<Item> tempList = new Vector<Item>();
-
-		    try {
-    		    BufferedReader reader = new BufferedReader(new InputStreamReader(
-    		          new FileInputStream(inputFile)));
-    		    
-    		    tempKeyword = reader.readLine(); //get the keyword in first line
-    		    reader.readLine(); //read the empty spacing line
-    		    
-    		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
-    		    	tempPrice = reader.readLine();
-    		    	tempUrl = reader.readLine();
-    		    	tempPostedDate = reader.readLine();
-    		    	reader.readLine(); //read the empty spacing line
-    		    	
-    		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
-    		    		readableFile = false;
-    		    	else {
-    		    		try {
-    		    			tempItem = new Item();
-        		    		tempItem.setTitle(tempTitle);
-        		    		tempItem.setPrice(Double.parseDouble(tempPrice));
-        		    		tempItem.setUrl(tempUrl);
-        		    		tempItem.setHyperlink(tempUrl);
-        		    		tempItem.setPostedDate(tempPostedDate);
-        		    		tempList.add(tempItem);
-    		    		}catch(ParseException e) {
-    		    			readableFile = false;
-    		    		}
-    		    		
-    		    	}
-    		    }
-    		    reader.close();
-    		}catch (IOException ex) {
-    			readableFile = false;
-    		}catch (NumberFormatException e) {
-    			readableFile = false;
-    		}
+    		Vector<Item> tempList = new Vector<Item>();
+    		tempList.addAll(fileReader(inputFile));
     		
     		String output; //because have to show extra information, the text of console have to be set explicitly
-			if(readableFile) {
+			if(!tempList.isEmpty()) {
+				String tempKeyword;
+				tempKeyword = tempList.get(0).getTitle(); //retrieve the first Item in list, which is a dummy item for storing the searched keywrod
+				tempList.remove(0);
+				
 				currentSearchResult = tempList;
 				refreshAllTabs(tempKeyword, currentSearchResult);
 				
@@ -311,6 +278,62 @@ public class Controller {
     	}
     }
     
+    private List<Item> fileReader(File inputFile){
+    	String tempKeyword = null;
+		String tempTitle = null;
+	    String tempPrice = null;
+	    String tempUrl = null;
+	    String tempPostedDate = null;
+	    Boolean readableFile = true;
+	    Item tempItem;
+	    Vector<Item> tempList = new Vector<Item>();
+
+	    try {
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(
+		          new FileInputStream(inputFile)));
+		    
+		    tempKeyword = reader.readLine(); //get the keyword in first line, and add as a dummy Item in the list at head
+		    tempItem = new Item();
+		    tempItem.setTitle(tempKeyword);
+		    tempList.add(tempItem);
+		    
+		    reader.readLine(); //read the empty spacing line
+		    
+		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
+		    	tempPrice = reader.readLine();
+		    	tempUrl = reader.readLine();
+		    	tempPostedDate = reader.readLine();
+		    	reader.readLine(); //read the empty spacing line
+		    	
+		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
+		    		readableFile = false;
+		    	else {
+		    		try {
+		    			tempItem = new Item();
+    		    		tempItem.setTitle(tempTitle);
+    		    		tempItem.setPrice(Double.parseDouble(tempPrice));
+    		    		tempItem.setUrl(tempUrl);
+    		    		tempItem.setHyperlink(tempUrl);
+    		    		tempItem.setPostedDate(tempPostedDate);
+    		    		tempList.add(tempItem);
+		    		}catch(ParseException e) {
+		    			readableFile = false;
+		    		}
+		    		
+		    	}
+		    }
+		    reader.close();
+		}catch (IOException ex) {
+			readableFile = false;
+		}catch (NumberFormatException e) {
+			readableFile = false;
+		}
+	    
+	    if(!readableFile)
+	    	tempList.clear();
+	    
+	    return tempList;
+    }
     /**
      * Initialize all the tabs. Trigger Event: "Close" button clicked. 
      */
