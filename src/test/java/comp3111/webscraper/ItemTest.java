@@ -3,14 +3,8 @@ package comp3111.webscraper;
 
 import org.junit.Test;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Hyperlink;
-
 import static org.junit.Assert.*;
 import java.util.Date;
-import java.awt.Desktop;
-import java.net.URL;
 import java.text.ParseException;
 
 public class ItemTest {
