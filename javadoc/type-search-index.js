@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"comp3111.webscraper","l":"Controller"},{"p":"comp3111.webscraper","l":"DistributionTab"},{"p":"comp3111.webscraper","l":"Item"},{"p":"comp3111.webscraper","l":"SummaryTab"},{"p":"comp3111.webscraper","l":"TableTab"},{"p":"comp3111.webscraper","l":"WebScraper"},{"p":"comp3111.webscraper","l":"WebScraperApplication"}]
