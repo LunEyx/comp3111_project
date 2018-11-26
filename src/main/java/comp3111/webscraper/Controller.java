@@ -205,22 +205,22 @@ public class Controller {
     	outputFile = fc.showSaveDialog(null);
     	
     	if(outputFile != null) {
-    		fileWritter(outputFile);
+    		fileWritter(outputFile, textFieldKeyword.getText(), currentSearchResult);
     	}
     }
     
-    private void fileWritter(File outputFile) {
+    private void fileWritter(File outputFile, String outputKeyword, List<Item> outputList) {
     	try {
 		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 		          new FileOutputStream(outputFile)));
 		          
 		    //output the keyword searched first
-		    writer.write(textFieldKeyword.getText());
+		    writer.write(outputKeyword);
 		    writer.newLine();
 		    writer.newLine();
 		    
 		    //output every item in the result list, a spcing line between each item
-		    for(Item temp : currentSearchResult) {
+		    for(Item temp : outputList) {
 		    	writer.write(temp.getTitle());
 		    	writer.newLine();
 		    	writer.write(Double.toString(temp.getPrice()));
@@ -251,6 +251,7 @@ public class Controller {
     	fc.setTitle("Load a search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
     	inputFile = fc.showOpenDialog(null);
+    	System.out.println(inputFile);
     	
     	if(inputFile != null) {
     		Vector<Item> tempList = new Vector<Item>();
