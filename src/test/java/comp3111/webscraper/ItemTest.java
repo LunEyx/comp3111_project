@@ -2,8 +2,15 @@ package comp3111.webscraper;
 
 
 import org.junit.Test;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Hyperlink;
+
 import static org.junit.Assert.*;
 import java.util.Date;
+import java.awt.Desktop;
+import java.net.URL;
 import java.text.ParseException;
 
 public class ItemTest {
@@ -51,5 +58,75 @@ public class ItemTest {
 		Date tempDate = new Date(1996, 12, 13);
 		i.setPostedDate(tempDate);
 		assertTrue(i.getDate().equals(tempDate));
+	}
+	
+	@Test
+	public void testNextPageItem() {
+		Item i = new Item();
+		String tempUrl = "https://www.youtube.com/?gl=HK";
+		i.nextPageItem(tempUrl);
+		
+		assertEquals(i.getTitle(), "Next Page");
+		assertEquals(i.getPrice(), 0.0, 0.001);
+		assertEquals(i.getUrl(), tempUrl);
+		assertEquals(i.getPostedDate(), "1990 - 01 - 01");
+		assertNull(i.getHyperlink());
+	}
+	
+	@Test
+	public void testTestNextPage1() {
+		Item i = new Item();
+		try {
+			i.setTitle("Next Page");
+			i.setPrice(0.0);
+			i.setPostedDate("1990 - 01 - 01");
+			assertTrue(i.testNextPage());
+		}catch (ParseException e){
+			//this exception is not related to this test case, actually can do nothing
+			//but here would still indicate fail otherwise
+			fail();
+		}
+	}
+	
+	@Test
+	public void testTestNextPage2() {
+		Item i = new Item();
+		try {
+			i.setTitle("Fail Case Tester");
+			i.setPrice(0.0);
+			i.setPostedDate("1990 - 01 - 01");
+			assertFalse(i.testNextPage());
+		}catch (ParseException e){
+			//same as testTestNextPage1()
+			fail();
+		}
+	}
+	
+	@Test
+	public void testTestNextPage3() {
+		Item i = new Item();
+		try {
+			i.setTitle("Next Page");
+			i.setPrice(1.0);
+			i.setPostedDate("1990 - 01 - 01");
+			assertFalse(i.testNextPage());
+		}catch (ParseException e){
+			//same as testTestNextPage1()
+			fail();
+		}
+	}
+	
+	@Test
+	public void testTestNextPage4() {
+		Item i = new Item();
+		try {
+			i.setTitle("Next Page");
+			i.setPrice(0.0);
+			i.setPostedDate("2018 - 01 - 01");
+			assertFalse(i.testNextPage());
+		}catch (ParseException e){
+			//same as testTestNextPage1()
+			fail();
+		}
 	}
 }
