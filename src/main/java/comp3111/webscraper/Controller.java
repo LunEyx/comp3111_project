@@ -111,15 +111,26 @@ public class Controller {
     @FXML
     private void actionSearch() {
     	System.out.println("actionSearch: " + textFieldKeyword.getText());
+    	List<Item> result = scraper.scrape(textFieldKeyword.getText(), false);
     	
-    	List<Item> result = scraper.scrape(textFieldKeyword.getText());
-    	
-    	if(result == null) { //s.t. there is error from the scrapper
+		if(result == null) { //s.t. there is error from the scrapper
     		String tempKeyword = textFieldKeyword.getText();
     		this.actionClose(); //clear all tabs
     		textFieldKeyword.setText(tempKeyword);
     		textAreaConsole.setText("Error from WebScrapper, empty results");
-    	}else {
+    	}else{
+    		while(result.get(result.size()-1).testNextPage()){ //this is for basic feature 3, testing if more pages exist for show
+    			System.out.println("next page");
+        		String nextPageUrl;
+        		nextPageUrl = result.get(result.size()-1).getUrl();
+        		result.remove(result.size()-1);
+        		
+        		//because cannot achieve synchronized update, so comment out the refresh line
+        		//refreshAllTabs(textFieldKeyword.getText(), result);
+        		
+        		result.addAll(scraper.scrape(nextPageUrl, true));
+        	}
+    		
     		// Below codes are related to basic 6
         	if (currentSearchResult != null) {
             	lastSearchKeyword = currentSearchKeyword;

@@ -19,6 +19,21 @@ public class Item {
 	private Date postedDate;
 	private Hyperlink hyperlink;
 	
+	public void nextPageItem(String url) {
+		this.setTitle("Next Page");
+		this.setPrice(0.0);
+		this.setUrl(url);
+		this.setPostedDate("Jan 01, 1990");
+		this.setHyperlink(url);
+	}
+	public Boolean testNextPage() {
+		if(this.getTitle().equals("Next Page") && 
+				this.getPrice() == 0.0 &&
+				this.getPostedDate().equals("Jan 01, 1990"))
+			return true;
+		else
+			return false;
+	}
 	/**
      * Getter: return the title of Item object.
      * 

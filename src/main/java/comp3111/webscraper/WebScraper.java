@@ -82,16 +82,20 @@ public class WebScraper {
 	/**
 	 * The only method implemented in this class, to scrape web content from the craigslist
 	 * 
-	 * @param keyword the keyword you want to search
+	 * @param keywordOrUrl the keyword you want to search
+	 * @param urlMode Indicates whether carry new search with keyword, or get results from next page
 	 * @return List&lt;Item&gt; - A list of Item objects for results found online. A zero size list is return if nothing is found. Null if any exception (e.g. no connectivity)
 	 */
-	public List<Item> scrape(String keyword) {
-
+	public List<Item> scrape(String keywordOrUrl, Boolean urlMode) {
 		try {
-			String searchUrl = DEFAULT_URL + "search/sss?sort=rel&query=" + URLEncoder.encode(keyword, "UTF-8");
+			String searchUrl;
+			if(urlMode)
+				searchUrl = keywordOrUrl;
+			else
+				searchUrl = DEFAULT_URL + "search/sss?sort=rel&query=" + URLEncoder.encode(keywordOrUrl, "UTF-8");
+			
 			HtmlPage page = client.getPage(searchUrl);
 
-			
 			List<?> items = (List<?>) page.getByXPath("//li[@class='result-row']");
 			
 			Vector<Item> result = new Vector<Item>();
@@ -118,7 +122,16 @@ public class WebScraper {
 
 				result.add(item);
 			}
-			client.close();
+			
+			//check if have next page of results to be shown
+			HtmlAnchor nextPage = ((HtmlAnchor) page.getFirstByXPath("//a[@class='button next']"));
+			if(nextPage.getHrefAttribute().length() > 0) {
+				Item dummyItem = new Item();
+				dummyItem.nextPageItem(DEFAULT_URL.substring(0, DEFAULT_URL.length()-1) + nextPage.getHrefAttribute());
+				System.out.println(dummyItem.getUrl());
+				result.add(dummyItem);
+			}else
+				client.close();
 			return result;
 		} catch (Exception e) {
 			System.out.println(e);
