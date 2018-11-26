@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
+
 import javafx.stage.FileChooser;
 
 import java.util.Date;
@@ -270,13 +272,18 @@ public class Controller {
     		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
     		    		readableFile = false;
     		    	else {
-    		    		tempItem = new Item();
-    		    		tempItem.setTitle(tempTitle);
-    		    		tempItem.setPrice(Double.parseDouble(tempPrice));
-    		    		tempItem.setUrl(tempUrl);
-    		    		tempItem.setHyperlink(tempUrl);
-    		    		tempItem.setPostedDate(tempPostedDate);
-    		    		tempList.add(tempItem);
+    		    		try {
+    		    			tempItem = new Item();
+        		    		tempItem.setTitle(tempTitle);
+        		    		tempItem.setPrice(Double.parseDouble(tempPrice));
+        		    		tempItem.setUrl(tempUrl);
+        		    		tempItem.setHyperlink(tempUrl);
+        		    		tempItem.setPostedDate(tempPostedDate);
+        		    		tempList.add(tempItem);
+    		    		}catch(ParseException e) {
+    		    			readableFile = false;
+    		    		}
+    		    		
     		    	}
     		    }
     		    reader.close();
