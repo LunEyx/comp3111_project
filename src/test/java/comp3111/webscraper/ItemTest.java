@@ -4,6 +4,7 @@ package comp3111.webscraper;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Date;
+import java.text.ParseException;
 
 public class ItemTest {
 
@@ -34,8 +35,13 @@ public class ItemTest {
 	@Test
 	public void testSetPostedDate1() {
 		Item i = new Item();
-		String tempDate = "Dec 13, 1996";
-		i.setPostedDate(tempDate);
+		String tempDate = "1996 - 12 - 13";
+		try {
+			i.setPostedDate(tempDate);
+		}catch(ParseException e){
+			fail();
+		}
+		
 		assertEquals(i.getPostedDate(), tempDate);
 	}
 	
