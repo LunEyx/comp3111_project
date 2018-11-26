@@ -2,6 +2,7 @@ package comp3111.webscraper;
 
 import java.awt.Desktop;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.event.ActionEvent;
@@ -20,16 +21,19 @@ public class Item {
 	private Hyperlink hyperlink;
 	
 	public void nextPageItem(String url) {
-		this.setTitle("Next Page");
-		this.setPrice(0.0);
-		this.setUrl(url);
-		this.setPostedDate("Jan 01, 1990");
-		this.setHyperlink(url);
+		try {
+			this.setTitle("Next Page");
+			this.setPrice(0.0);
+			this.setUrl(url);
+			this.setPostedDate("1990 - 01 - 01");
+			this.setHyperlink(url);
+		}catch(ParseException e) {
+		}
 	}
 	public Boolean testNextPage() {
 		if(this.getTitle().equals("Next Page") && 
 				this.getPrice() == 0.0 &&
-				this.getPostedDate().equals("Jan 01, 1990"))
+				this.getPostedDate().equals("1990 - 01 - 01"))
 			return true;
 		else
 			return false;
@@ -130,12 +134,9 @@ public class Item {
      * @return String - Posted date of Item object
      */
 	public String getPostedDate() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy - MM - dd");
 		String temp;
-		temp = this.postedDate.toString().substring(4, 7); //get the month
-		temp += ' ';
-		temp += this.postedDate.toString().substring(8, 10); //get the date
-		temp += ", ";
-		temp += this.postedDate.toString().substring(24, 28); //get the year		
+		temp = formatter.format(this.postedDate);
 		return temp;
 	}
 	
@@ -152,11 +153,14 @@ public class Item {
      * Setter: set the posted date data member of Item object. Used with results loaded locally.
      * 
      * @param inDate The posted date (of String type variable) of Item object
+	 * @throws ParseException 
      */
-	public void setPostedDate(String inDate) {//this is for after loading a search record
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+	public void setPostedDate(String inDate) throws ParseException{//this is for after loading a search record
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy - MM - dd");
 		try{
 			this.setPostedDate(formatter.parse(inDate));
-		}catch (Exception e) {}
+		}catch (ParseException e) {
+			throw e;
+		}
 	}
 }
