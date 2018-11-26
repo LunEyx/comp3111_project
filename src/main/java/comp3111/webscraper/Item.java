@@ -26,7 +26,7 @@ public class Item {
 			this.setPrice(0.0);
 			this.setUrl(url);
 			this.setPostedDate("1990 - 01 - 01");
-			this.setHyperlink(url);
+			this.hyperlink = null;
 		}catch(ParseException e) {
 		}
 	}
@@ -157,10 +157,6 @@ public class Item {
      */
 	public void setPostedDate(String inDate) throws ParseException{//this is for after loading a search record
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy - MM - dd");
-		try{
-			this.setPostedDate(formatter.parse(inDate));
-		}catch (ParseException e) {
-			throw e;
-		}
+		this.setPostedDate(formatter.parse(inDate));
 	}
 }
