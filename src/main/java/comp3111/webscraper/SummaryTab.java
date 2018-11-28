@@ -10,6 +10,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
+/**
+ * SummaryTab class for manipulating the Summary Tab
+ *
+ */
 public class SummaryTab {
 	private Label labelCount;
 	private Label labelPrice;
@@ -18,6 +22,15 @@ public class SummaryTab {
 	private String itemsMinUrl;
 	private String itemsLatestUrl;
 	
+	
+	/**
+     * Constructor for SummaryTab.
+     * 
+     * @param labelCount reference variable to FXML label in Summary Tab that shows amount of searched items.
+     * @param labelPrice reference variable to FXML label in Summary Tab that shows average selling price.
+     * @param labelMin reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to lowest price item.
+     * @param labelLatest reference variable to FXML Hyperlink in Summary Tab that shows Hyperlink to latest posted item.
+     */
 	public SummaryTab(Label labelCount, Label labelPrice, Hyperlink labelMin, Hyperlink labelLatest) {
 		this.labelCount = labelCount;
 		this.labelPrice = labelPrice;
@@ -25,6 +38,21 @@ public class SummaryTab {
 		this.labelLatest = labelLatest;
 	}
 	
+	/**
+	 * Clear the output data and set labels to invalid values.
+	 */
+	public void reset() {
+		labelCount.setText("0");
+    	labelPrice.setText("-");
+    	labelMin.setText("-");
+    	labelLatest.setText("-");
+	}
+	
+	/**
+	 * Refresh all data of SummaryTab with the results to be shown.
+	 * 
+	 * @param items List of Item objects to be shown
+	 */
 	public void refresh(List<Item> items) {
 		int itemsCount = 0;
 		double itemsPrice = 0;
