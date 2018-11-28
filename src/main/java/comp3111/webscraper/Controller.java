@@ -121,17 +121,17 @@ public class Controller {
     		textFieldKeyword.setText(tempKeyword);
     		textAreaConsole.setText("Error from WebScrapper, empty results");
     	}else{
-    		while(result.get(result.size()-1).testNextPage()){ //this is for basic feature 3, testing if more pages exist for show
-    			System.out.println("next page");
-        		String nextPageUrl;
-        		nextPageUrl = result.get(result.size()-1).getUrl();
-        		result.remove(result.size()-1);
-        		
-        		//because cannot achieve synchronized update, so comment out the refresh line
-        		//refreshAllTabs(textFieldKeyword.getText(), result);
-        		
-        		result.addAll(scraper.scrape(nextPageUrl, true));
-        	}
+//    		while(result.get(result.size()-1).testNextPage()){ //this is for basic feature 3, testing if more pages exist for show
+//    			System.out.println("next page");
+//        		String nextPageUrl;
+//        		nextPageUrl = result.get(result.size()-1).getUrl();
+//        		result.remove(result.size()-1);
+//        		
+//        		//because cannot achieve synchronized update, so comment out the refresh line
+//        		//refreshAllTabs(textFieldKeyword.getText(), result);
+//        		
+//        		result.addAll(scraper.scrape(nextPageUrl, true));
+//        	}
     		
     		// Below codes are related to basic 6
         	if (currentSearchResult != null) {
