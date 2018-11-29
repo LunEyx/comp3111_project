@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,21 +39,6 @@ public class ControllerTest {
 	    t.start();
 	    System.out.printf("FX App thread started\n");
 	    Thread.sleep(500);
-	}
-	
-	@Test
-	public void testShowTeamInfo() {
-		Controller con = new Controller();
-		Class conClass = con.getClass();
-		try {
-			Method method = conClass.getDeclaredMethod("showTeamInfo");
-			method.setAccessible(true);
-			method.invoke(con);
-		}catch(NoSuchMethodException e) {
-	    }catch(IllegalAccessException ee) {
-	    }catch(InvocationTargetException ee2) {
-	    }
-//		assert?
 	}
 	
 	@Test
@@ -205,10 +191,11 @@ public class ControllerTest {
 	}
 	
 	@Test
-	public void testActionSearch1() {
+	public void testActionSearchWithNoResult() {
 		Controller con = new Controller();
 		Class conClass = con.getClass();
 		TextField tf = new TextField();
+		TableView tv = new TableView<Item>();
 		
 		try {
 			Field fe;
@@ -249,7 +236,7 @@ public class ControllerTest {
 			
 			fe = conClass.getDeclaredField("tableTab");
 			fe.setAccessible(true);
-			fe.set(con,new TableTab(new TableView<Item>(), new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
+			fe.set(con, new TableTab(tv, new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
 			
 			fe = conClass.getDeclaredField("distributionTab");
 			fe.setAccessible(true);
@@ -263,6 +250,7 @@ public class ControllerTest {
 			
 			assertEquals(tf.getText(), "Tester Keyword");
 			assertEquals(temp, "Tester Keyword");
+			assertEquals(tv.getItems().size(), 0);
 		}catch(NoSuchMethodException e) {
 	    }catch(IllegalAccessException ee) {
 	    }catch(InvocationTargetException ee2) {
@@ -271,10 +259,11 @@ public class ControllerTest {
 	}
 	
 	@Test
-	public void testActionSearch2() {
+	public void testActionSearchResultMoreThanOnePage() {
 		Controller con = new Controller();
 		Class conClass = con.getClass();
 		TextField tf = new TextField();
+		TableView tv = new TableView<Item>();
 		
 		try {
 			Field fe;
@@ -283,7 +272,7 @@ public class ControllerTest {
 			fe.setAccessible(true);
 			fe.set(con,new TextField ());
 			tf = (TextField)fe.get(con);
-			tf.setText("hello kitty");
+			tf.setText("negative");
 			
 			fe = conClass.getDeclaredField("textAreaConsole");
 			fe.setAccessible(true);
@@ -315,7 +304,8 @@ public class ControllerTest {
 			
 			fe = conClass.getDeclaredField("tableTab");
 			fe.setAccessible(true);
-			fe.set(con,new TableTab(new TableView<Item>(), new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
+			fe.set(con, new TableTab(tv, new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
+
 			
 			fe = conClass.getDeclaredField("distributionTab");
 			fe.setAccessible(true);
@@ -327,8 +317,9 @@ public class ControllerTest {
 			
 			String temp = (String)conClass.getDeclaredField("currentSearchKeyword").get(con);
 			
-			assertEquals(tf.getText(), "hello kitty");
-			assertEquals(temp, "hello kitty");
+			assertEquals(tf.getText(), "negative");
+			assertEquals(temp, "negative");
+			assertTrue(tv.getItems().size() >= 120);
 		}catch(NoSuchMethodException e) {
 	    }catch(IllegalAccessException ee) {
 	    }catch(InvocationTargetException ee2) {
@@ -337,10 +328,11 @@ public class ControllerTest {
 	}
 	
 	@Test
-	public void testActionSearch3() {
+	public void testActionSearchResultWithinOnePage() {
 		Controller con = new Controller();
 		Class conClass = con.getClass();
 		TextField tf = new TextField();
+		TableView tv = new TableView<Item>();
 		
 		try {
 			Field fe;
@@ -349,7 +341,7 @@ public class ControllerTest {
 			fe.setAccessible(true);
 			fe.set(con,new TextField ());
 			tf = (TextField)fe.get(con);
-			tf.setText("hello");
+			tf.setText("GTX 1080");
 			
 			fe = conClass.getDeclaredField("textAreaConsole");
 			fe.setAccessible(true);
@@ -381,7 +373,7 @@ public class ControllerTest {
 			
 			fe = conClass.getDeclaredField("tableTab");
 			fe.setAccessible(true);
-			fe.set(con,new TableTab(new TableView<Item>(), new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
+			fe.set(con,new TableTab(tv, new TableColumn<Item, String>(), new TableColumn<Item, Double>(), new TableColumn<Item, Hyperlink>(), new TableColumn<Item, Date>()));
 			
 			fe = conClass.getDeclaredField("distributionTab");
 			fe.setAccessible(true);
@@ -393,12 +385,23 @@ public class ControllerTest {
 			
 			String temp = (String)conClass.getDeclaredField("currentSearchKeyword").get(con);
 			
-//			assertEquals(tf.getText(), "hello kitty");
-//			assertEquals(temp, "hello kitty");
+			assertEquals(tf.getText(), "GTX 1080");
+			assertEquals(temp, "GTX 1080");
+			assertTrue(tv.getItems().size() > 0 && tv.getItems().size() < 120);
 		}catch(NoSuchMethodException e) {
 	    }catch(IllegalAccessException ee) {
 	    }catch(InvocationTargetException ee2) {
 	    }catch(NoSuchFieldException ee3) {
 	    }
+	}
+	
+	@Test
+	public void testActionQuit() throws Exception {
+		Controller con = new Controller();
+		Method method = con.getClass().getDeclaredMethod("actionQuit");
+		method.setAccessible(true);
+		method.invoke(con);
+		
+		assertTrue(Platform.isImplicitExit());
 	}
 }
