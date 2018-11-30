@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * DistributionTab class for manipulating the Distribution Tab
- *
+ * @author Lam Ping Yeung
  */
 public class DistributionTab {
 	private BarChart<String, Number> barChartHistogram;

@@ -12,7 +12,7 @@ import javafx.scene.control.Hyperlink;
 
 /**
  * TableTab class for manipulating the Table Tab
- *
+ * @author Fung King Fai
  */
 public class TableTab {
 	private ObservableList<Item> result;
