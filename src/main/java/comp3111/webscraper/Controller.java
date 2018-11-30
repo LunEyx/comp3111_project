@@ -157,6 +157,8 @@ public class Controller {
     private void actionNew() {
     	lastSearchMenuItem.setDisable(true);
     	refreshAllTabs(lastSearchKeyword, lastSearchResult);
+    	currentSearchKeyword = lastSearchKeyword;
+    	currentSearchResult = lastSearchResult;
     }
     
     
