@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 
 /**
  * SummaryTab class for manipulating the Summary Tab
- *
+ * @author Chang Chu Ling
  */
 public class SummaryTab {
 	private Label labelCount;

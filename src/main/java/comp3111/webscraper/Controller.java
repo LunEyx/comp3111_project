@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
+
 import javafx.stage.FileChooser;
 
 import java.util.Date;
@@ -29,7 +31,7 @@ import java.util.Vector;
 
 /**
  * Controller class that manage GUI interaction. Please see document about JavaFX for details.
- * @author kevin
+ * @author Kevin and Team Pacific
  */
 public class Controller {
 
@@ -189,7 +191,7 @@ public class Controller {
     }
     
     /**
-     * Save the shown result to an output file. Trigger Event: "Save" button clicked. Opens a file chooser.
+     * Pick file to output and call fileWritter() to save the shown result. Trigger Event: "Save" button clicked. Opens a file chooser.
      */
     @FXML
     private void saveToFile() {
@@ -203,35 +205,48 @@ public class Controller {
     	outputFile = fc.showSaveDialog(null);
     	
     	if(outputFile != null) {
-    		try {
-    		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-    		          new FileOutputStream(outputFile)));
-    		          
-    		    //output the keyword searched first
-    		    writer.write(textFieldKeyword.getText());
-    		    writer.newLine();
-    		    writer.newLine();
-    		    
-    		    //output every item in the result list, a spcing line between each item
-    		    for(Item temp : currentSearchResult) {
-    		    	writer.write(temp.getTitle());
-    		    	writer.newLine();
-    		    	writer.write(Double.toString(temp.getPrice()));
-    		    	writer.newLine();
-    		    	writer.write(temp.getUrl());
-    		    	writer.newLine();
-    		    	writer.write(temp.getPostedDate());
-    		    	writer.newLine();
-    		    	writer.newLine();
-    		    }
-    		    
-    		    writer.close();
-    		} catch (IOException ex) {}
+    		fileWritter(outputFile, textFieldKeyword.getText(), currentSearchResult);
     	}
     }
     
     /**
-     * Read from an existing file and show the results stored in it. Trigger Event: "Load" button clicked. Opens a file chooser.  
+     * Helper function to write to file.
+     * 
+     * @param outputFile File to be output to
+     * @param outputKeyword The searched keyword to be stored
+     * @param outputList The results to be stored
+     */
+    private void fileWritter(File outputFile, String outputKeyword, List<Item> outputList) {
+    	try {
+		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+		          new FileOutputStream(outputFile)));
+		          
+		    //output the keyword searched first
+		    writer.write(outputKeyword);
+		    writer.newLine();
+		    writer.newLine();
+		    
+		    //output every item in the result list, a spcing line between each item
+		    for(Item temp : outputList) {
+		    	writer.write(temp.getTitle());
+		    	writer.newLine();
+		    	writer.write(Double.toString(temp.getPrice()));
+		    	writer.newLine();
+		    	writer.write(temp.getUrl());
+		    	writer.newLine();
+		    	writer.write(temp.getPostedDate());
+		    	writer.newLine();
+		    	writer.newLine();
+		    }
+		    
+		    writer.close();
+		} catch (IOException ex) {
+			
+		}
+    }
+    
+    /**
+     * Pick file to read and call fileReader() to load result from an existing file. Trigger Event: "Load" button clicked. Opens a file chooser.  
      */
     @FXML
     private void loadFromFile() {
@@ -243,51 +258,18 @@ public class Controller {
     	fc.setTitle("Load a search record");
     	fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt"));
     	inputFile = fc.showOpenDialog(null);
+    	System.out.println(inputFile);
     	
     	if(inputFile != null) {
-    		String tempKeyword = null;
-    		String tempTitle = null;
-		    String tempPrice = null;
-		    String tempUrl = null;
-		    String tempPostedDate = null;
-		    Boolean readableFile = true;
-		    Item tempItem;
-		    Vector<Item> tempList = new Vector<Item>();
-
-		    try {
-    		    BufferedReader reader = new BufferedReader(new InputStreamReader(
-    		          new FileInputStream(inputFile)));
-    		    
-    		    tempKeyword = reader.readLine(); //get the keyword in first line
-    		    reader.readLine(); //read the empty spacing line
-    		    
-    		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
-    		    	tempPrice = reader.readLine();
-    		    	tempUrl = reader.readLine();
-    		    	tempPostedDate = reader.readLine();
-    		    	reader.readLine(); //read the empty spacing line
-    		    	
-    		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
-    		    		readableFile = false;
-    		    	else {
-    		    		tempItem = new Item();
-    		    		tempItem.setTitle(tempTitle);
-    		    		tempItem.setPrice(Double.parseDouble(tempPrice));
-    		    		tempItem.setUrl(tempUrl);
-    		    		tempItem.setHyperlink(tempUrl);
-    		    		tempItem.setPostedDate(tempPostedDate);
-    		    		tempList.add(tempItem);
-    		    	}
-    		    }
-    		    reader.close();
-    		}catch (IOException ex) {
-    			readableFile = false;
-    		}catch (NumberFormatException e) {
-    			readableFile = false;
-    		}
+    		Vector<Item> tempList = new Vector<Item>();
+    		tempList.addAll(fileReader(inputFile));
     		
     		String output; //because have to show extra information, the text of console have to be set explicitly
-			if(readableFile) {
+			if(!tempList.isEmpty()) {
+				String tempKeyword;
+				tempKeyword = tempList.get(0).getTitle(); //retrieve the first Item in list, which is a dummy item for storing the searched keywrod
+				tempList.remove(0);
+				
 				currentSearchResult = tempList;
 				refreshAllTabs(tempKeyword, currentSearchResult);
 				
@@ -302,6 +284,69 @@ public class Controller {
 				
 			textAreaConsole.setText(output);	
     	}
+    }
+    
+    /**
+     * Helper function to read from file
+     * 
+     * @param inputFile File to be read
+     * @return List&lt;Item&gt; - The results stored in the file
+     */
+    private List<Item> fileReader(File inputFile){
+    	String tempKeyword = null;
+		String tempTitle = null;
+	    String tempPrice = null;
+	    String tempUrl = null;
+	    String tempPostedDate = null;
+	    Boolean readableFile = true;
+	    Item tempItem;
+	    Vector<Item> tempList = new Vector<Item>();
+
+	    try {
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(
+		          new FileInputStream(inputFile)));
+		    
+		    tempKeyword = reader.readLine(); //get the keyword in first line, and add as a dummy Item in the list at head
+		    tempItem = new Item();
+		    tempItem.setTitle(tempKeyword);
+		    tempList.add(tempItem);
+		    
+		    reader.readLine(); //read the empty spacing line
+		    
+		    while((tempTitle = reader.readLine()) != null) { //read all the attributes
+		    	tempPrice = reader.readLine();
+		    	tempUrl = reader.readLine();
+		    	tempPostedDate = reader.readLine();
+		    	reader.readLine(); //read the empty spacing line
+		    	
+		    	if(tempPrice == null || tempUrl == null || tempPostedDate == null) //to know that readLine() got eof and this indicates invalid file format
+		    		readableFile = false;
+		    	else {
+		    		try {
+		    			tempItem = new Item();
+    		    		tempItem.setTitle(tempTitle);
+    		    		tempItem.setPrice(Double.parseDouble(tempPrice));
+    		    		tempItem.setUrl(tempUrl);
+    		    		tempItem.setHyperlink(tempUrl);
+    		    		tempItem.setPostedDate(tempPostedDate);
+    		    		tempList.add(tempItem);
+		    		}catch(ParseException e) {
+		    			readableFile = false;
+		    		}
+		    		
+		    	}
+		    }
+		    reader.close();
+		}catch (IOException ex) {
+			readableFile = false;
+		}catch (NumberFormatException e) {
+			readableFile = false;
+		}
+	    
+	    if(!readableFile)
+	    	tempList.clear();
+	    
+	    return tempList;
     }
     
     /**
