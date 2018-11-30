@@ -31,7 +31,7 @@ import java.util.Vector;
 
 /**
  * Controller class that manage GUI interaction. Please see document about JavaFX for details.
- * @author kevin
+ * @author Kevin and Team Pacific
  */
 public class Controller {
 
@@ -193,7 +193,7 @@ public class Controller {
     }
     
     /**
-     * Save the shown result to an output file. Trigger Event: "Save" button clicked. Opens a file chooser.
+     * Pick file to output and call fileWritter() to save the shown result. Trigger Event: "Save" button clicked. Opens a file chooser.
      */
     @FXML
     private void saveToFile() {
@@ -211,6 +211,13 @@ public class Controller {
     	}
     }
     
+    /**
+     * Helper function to write to file.
+     * 
+     * @param outputFile File to be output to
+     * @param outputKeyword The searched keyword to be stored
+     * @param outputList The results to be stored
+     */
     private void fileWritter(File outputFile, String outputKeyword, List<Item> outputList) {
     	try {
 		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
@@ -241,7 +248,7 @@ public class Controller {
     }
     
     /**
-     * Read from an existing file and show the results stored in it. Trigger Event: "Load" button clicked. Opens a file chooser.  
+     * Pick file to read and call fileReader() to load result from an existing file. Trigger Event: "Load" button clicked. Opens a file chooser.  
      */
     @FXML
     private void loadFromFile() {
@@ -281,6 +288,12 @@ public class Controller {
     	}
     }
     
+    /**
+     * Helper function to read from file
+     * 
+     * @param inputFile File to be read
+     * @return List&lt;Item&gt; - The results stored in the file
+     */
     private List<Item> fileReader(File inputFile){
     	String tempKeyword = null;
 		String tempTitle = null;
@@ -337,6 +350,7 @@ public class Controller {
 	    
 	    return tempList;
     }
+    
     /**
      * Initialize all the tabs. Trigger Event: "Close" button clicked. 
      */
